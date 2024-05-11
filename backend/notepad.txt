@@ -1,0 +1,5 @@
+/app.module.ts
+synchronize: true, // Não recomendado para produção
+
+
+  // "endOfLine": "lf"
