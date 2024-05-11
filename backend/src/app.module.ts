@@ -19,7 +19,7 @@ import { UsersModule } from './users/user.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true, // Não recomendado para produção
+        ssl: true,
       }),
       inject: [ConfigService],
     }),
