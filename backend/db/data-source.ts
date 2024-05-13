@@ -1,14 +1,6 @@
 import env from "config/env";
 import { DataSource, DataSourceOptions } from "typeorm";
 
-
-console.log(env().database.host);
-console.log(env().database.port);
-console.log(env().database.username);
-console.log(env().database.password);
-console.log(env().database.database);
-
-
 export const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
     host: env().database.host,
@@ -19,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
     entities: ['dist/**/*.entity.js'],
     migrations: ['dist/db/migration/*.js'],
     migrationsRun: true,
-    synchronize: false
+    synchronize: false,
     // ssl: true,
 };
 
