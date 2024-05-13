@@ -9,7 +9,6 @@ import { SuperpowerModule } from './superpower/superpower.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.development.local', '.env.development'],
       isGlobal: true,
       cache: true,
     }),
