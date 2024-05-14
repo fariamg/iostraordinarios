@@ -21,7 +21,9 @@
     "typeorm": "yarn run build && npx typeorm -d dist/db/data-source.js",
     "migration:generate": "yarn run typeorm -- migration:generate",
     "migration:run": "yarn run typeorm -- migration:run",
-    "migration:revert": "yarn run typeorm -- migration:revert"
+    "migration:revert": "yarn run typeorm -- migration:revert",
+    "migration:show": "yarn run typeorm -- migration:show"
+
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
