@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { dataSourceOptions } from '../db/data-source';
 import { SuperpowerModule } from './superpower/superpower.module';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SuperpowerModule } from './superpower/superpower.module';
     AuthModule,
     UserModule,
     SuperpowerModule,
+    PostModule,
   ],
 })
 export class AppModule {}
