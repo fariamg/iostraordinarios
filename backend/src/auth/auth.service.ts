@@ -14,6 +14,13 @@ export class AuthService {
         private userRepository: Repository<User>,
     ) {}
 
+    login(user: any) {
+        const payload = { username: user.username, sub: user.id, role: user.role };
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
+    }
+
     async validateUser({ username, password }: AuthPayloadDto) {
         const user = await this.userRepository.findOne({ where: { username } });
 
@@ -23,12 +30,5 @@ export class AuthService {
 
         const { password: _, ...result } = user;
         return result;
-    }
-
-    login(user: any) {
-        const payload = { username: user.username, sub: user.id };
-        return {
-            access_token: this.jwtService.sign(payload),
-        };
     }
 }

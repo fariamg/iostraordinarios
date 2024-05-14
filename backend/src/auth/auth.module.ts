@@ -8,6 +8,9 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { User } from '../user/entities/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import env from 'config/env';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
     imports: [
@@ -15,15 +18,22 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         TypeOrmModule.forFeature([User]),
         PassportModule,
         JwtModule.registerAsync({
-            imports: [ConfigModule],
-            useFactory: async (configService: ConfigService) => ({
-                secret: configService.get<string>('JWT_SECRET'),
+            useFactory: async () => ({
+                secret: env().jwt_secret,
                 signOptions: { expiresIn: '1d' },
             }),
             inject: [ConfigService],
         }),
     ],
-    providers: [AuthService, LocalStrategy, JwtStrategy],
+    providers: [
+        AuthService,
+        LocalStrategy,
+        JwtStrategy, { 
+            provide: APP_GUARD,
+            useClass: RolesGuard
+        }
+    ],
     controllers: [AuthController],
+    exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

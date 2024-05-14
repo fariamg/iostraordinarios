@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { UserRole } from '../enum/user-role.enum';
+import { Post } from 'src/post/entities/post.entity';
 
 @Entity('users')
 export class User {
@@ -14,6 +16,12 @@ export class User {
     @Column({ name:'email', unique: true })
     email: string;
 
+    @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+    role: UserRole;
+
+    @OneToMany(() => Post, post => post.user)
+    posts: Post[];
+    
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
   
