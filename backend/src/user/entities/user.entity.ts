@@ -6,9 +6,6 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
-    role: UserRole;
-
     @Column({ name:'username', unique: true, nullable: false })
     username: string;
 
@@ -18,6 +15,9 @@ export class User {
     @Column({ name:'email', unique: true })
     email: string;
 
+    @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+    role: UserRole;
+    
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
   
