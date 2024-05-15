@@ -12,7 +12,7 @@ export const dataSourceOptions: DataSourceOptions = {
     migrations: ['dist/db/migration/*.js'],
     // migrationsRun: true,
     synchronize: false,
-    ssl: true,
+    ssl: false,
 };
 
 const dataSource = new DataSource(dataSourceOptions);

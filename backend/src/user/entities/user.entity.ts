@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, ManyToOne } from 'typeorm';
 import { UserRole } from '../enum/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
+import { Tribe } from 'src/tribe/entities/tribe.entity';
 
 @Entity('users')
 export class User {
@@ -21,6 +22,9 @@ export class User {
 
     @OneToMany(() => Post, post => post.user)
     posts: Post[];
+
+    @ManyToOne(() => Tribe, tribe => tribe.users)
+    tribes: Tribe[];
     
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
