@@ -6,7 +6,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { UserRole } from 'src/user/enum/user-role.enum';
 
-@Controller('tribe')
+@Controller('tribes')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class TribeController {
   constructor(private readonly tribeService: TribeService) {}
