@@ -8,9 +8,6 @@ export class Superpower {
   @Column({ length: 500, nullable: false })
   name: string;
 
-  @Column({ length: 500, nullable: false })
-  description: string;
-
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
 

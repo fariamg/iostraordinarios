@@ -30,7 +30,7 @@ export class User {
 
     @ManyToMany(() => Tag, tag => tag.users, { eager: true })
     @JoinTable({
-        name: 'user_tags',
+        name: 'users_tags',
         joinColumn: { name: 'user_id', referencedColumnName: 'id' },
         inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' }
     })

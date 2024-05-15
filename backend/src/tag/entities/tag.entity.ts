@@ -1,3 +1,4 @@
+import { Post } from "src/post/entities/post.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -11,4 +12,7 @@ export class Tag {
 
     @ManyToMany(() => User, user => user.tags)
     users: User[];
+
+    @ManyToMany(() => Post, post => post.tags)
+    posts: Post[];
 }

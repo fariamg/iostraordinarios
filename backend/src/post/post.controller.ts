@@ -18,7 +18,7 @@ export class PostController {
   ) {}
 
   @Post()
-  @Roles(UserRole.USER)
+  @Roles(UserRole.LEADER)
   async create(@Body() createPostDto: CreatePostDto, @Req() req: RequestWithUser) {
     const userId = req.user.id;
     const user = await this.userService.findOne(userId);

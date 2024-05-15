@@ -1,5 +1,6 @@
+import { Tag } from "src/tag/entities/tag.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'posts' })
 export class Post {
@@ -15,6 +16,10 @@ export class Post {
   @ManyToOne(() => User, user => user.posts, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @ManyToMany(() => Tag, tag => tag.posts) 
+  @JoinTable({ name: 'posts_tags' })
+  tags: Tag[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
