@@ -7,6 +7,7 @@ import { dataSourceOptions } from '../db/data-source';
 import { SuperpowerModule } from './superpower/superpower.module';
 import { PostModule } from './post/post.module';
 import { TagModule } from './tag/tag.module';
+import { TribeModule } from './tribe/tribe.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TagModule } from './tag/tag.module';
     SuperpowerModule,
     PostModule,
     TagModule,
+    TribeModule,
   ],
 })
 export class AppModule {}

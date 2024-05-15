@@ -3,6 +3,10 @@ import { UserRole } from '../enum/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, ManyToOne } from 'typeorm';
+import { UserRole } from '../enum/user-role.enum';
+import { Post } from 'src/post/entities/post.entity';
+import { Tribe } from 'src/tribe/entities/tribe.entity';
 
 @Entity('users')
 export class User {
@@ -41,6 +45,8 @@ export class User {
     @OneToOne(() => Superpower)
     @JoinColumn({ name: 'superpower_id' })
     superpower: Superpower;
+    @ManyToOne(() => Tribe, tribe => tribe.users)
+    tribes: Tribe[];
     
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
