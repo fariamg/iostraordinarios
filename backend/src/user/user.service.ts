@@ -11,9 +11,9 @@ export class UserService {
         private userRepository: Repository<User>,
     ) {}
 
-    async createUser(username: string, password: string, email: string): Promise<User> {
+    async createUser(fullName: string, password: string, email: string, position: string): Promise<User> {
         const hashedPassword = await hashPassword(password);
-        const user = this.userRepository.create({ username, password: hashedPassword, email });
+        const user = this.userRepository.create({ fullName, password: hashedPassword, email, position });
         return this.userRepository.save(user);
     }
 
@@ -21,7 +21,7 @@ export class UserService {
         return this.userRepository.findOneBy({ id });
     }
 
-    async findOneByUsername(username: string): Promise<User | undefined> {
-        return this.userRepository.findOne({ where: { username } });
+    async findOneByfullName(fullName: string): Promise<User | undefined> {
+        return this.userRepository.findOne({ where: { fullName } });
     }
 }

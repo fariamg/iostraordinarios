@@ -1,19 +1,10 @@
-import env from "config/env";
-import { DataSource, DataSourceOptions } from "typeorm";
+import dataSourceProd, { dataSourceOptions as dataSourceOptionsProd } from "./data-source-prod";
+import dataSourceLocal, { dataSourceOptions as dataSourceOptionsLocal } from "./data-source-local";
 
-export const dataSourceOptions: DataSourceOptions = {
-    type: 'postgres',
-    host: env().database.host,
-    port: Number(env().database.port),
-    username: env().database.username,
-    password: env().database.password,
-    database: env().database.database,
-    entities: ['dist/**/*.entity.js'],
-    migrations: ['dist/db/migration/*.js'],
-    // migrationsRun: true,
-    synchronize: false,
-    ssl: true,
-};
+export const dataSourceOptions = process.env.NODE_ENV === "production"
+    ? dataSourceOptionsProd
+    : dataSourceOptionsLocal;
 
-const dataSource = new DataSource(dataSourceOptions);
-export default dataSource;
+export default process.env.NODE_ENV === "production"
+    ? dataSourceProd
+    : dataSourceLocal;

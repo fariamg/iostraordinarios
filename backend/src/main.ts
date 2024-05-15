@@ -7,15 +7,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('NestJS API')
-    .setDescription('The NestJS API description')
+    .setTitle('Ioasys Journey API')
+    .setDescription('The Ioasys Journey API description')
     .setVersion('1.0')
     .addTag('nestjs')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  const PORT = env().database.port || 3000;
+  const PORT = env().app.port || 3000;
   await app.listen(PORT);
   console.log(`Application is running on: ${PORT}`);
 }
