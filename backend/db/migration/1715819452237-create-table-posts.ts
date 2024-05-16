@@ -5,7 +5,7 @@ export class createTablePosts1615388649816 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TABLE public.posts (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(500) NOT NULL,
+        title VARCHAR(500) NOT NULL,
         description VARCHAR(500) NOT NULL,
         user_id INTEGER NOT NULL,
         created_at TIMESTAMP DEFAULT now() NOT NULL,

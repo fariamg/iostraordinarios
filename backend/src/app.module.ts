@@ -8,6 +8,7 @@ import { SuperpowerModule } from './superpower/superpower.module';
 import { PostModule } from './post/post.module';
 import { TagModule } from './tag/tag.module';
 import { TribeModule } from './tribe/tribe.module';
+import { JourneyModule } from './journey/journey.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TribeModule } from './tribe/tribe.module';
     PostModule,
     TagModule,
     TribeModule,
+    JourneyModule,
   ],
 })
 export class AppModule {}

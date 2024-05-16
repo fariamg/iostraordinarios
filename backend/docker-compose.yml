@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DB_HOST: dpg-cp34q5f79t8c73empfgg-a
+      DB_PORT: 5432
+      DB_USERNAME: root
+      DB_PASSWORD: kd4p1Sk5sqrtpZ2xvbbzpED7Atqh6yC0
+      DB_DATABASE: ioasys_journey_database
+      JWT_SECRET: abc123
