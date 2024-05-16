@@ -4,6 +4,7 @@ import { Post } from 'src/post/entities/post.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Tribe } from 'src/tribe/entities/tribe.entity';
+import { Like } from 'src/like/entities/like.entity';
 
 @Entity('users')
 export class User {
@@ -38,6 +39,9 @@ export class User {
 
     @OneToMany(() => Post, post => post.user)
     posts: Post[];
+
+    @OneToMany(() => Like, like => like.user)
+    likes: Like[];
 
     @OneToOne(() => Superpower)
     @JoinColumn({ name: 'superpower_id' })
