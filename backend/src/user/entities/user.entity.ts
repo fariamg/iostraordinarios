@@ -1,26 +1,54 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
 import { UserRole } from '../enum/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
+import { Superpower } from 'src/superpower/entities/superpower.entity';
+import { Tag } from 'src/tag/entities/tag.entity';
+import { Tribe } from 'src/tribe/entities/tribe.entity';
+import { Journey } from 'src/journey/entities/journey.entity';
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name:'username', unique: true, nullable: false })
-    username: string;
+    @Column({ name:'full_name', nullable: false })
+    fullName: string;
 
     @Column({ name:'password', nullable: false })
     password: string;
 
-    @Column({ name:'email', unique: true })
+    @Column({ name:'email', unique: true, nullable: false })
     email: string;
 
-    @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+    @Column({ name:'position', nullable: false })
+    position: string;
+
+    @Column({ type: 'enum', enum: UserRole, nullable: false, default: UserRole.USER })
     role: UserRole;
 
-    @OneToMany(() => Post, post => post.user)
+    @Column({ name:'nuts', nullable: false, default: 0 })
+    nuts: number;
+
+    @ManyToMany(() => Tag, tag => tag.users, { eager: true })
+    @JoinTable({
+        name: 'users_tags',
+        joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' }
+    })
+    tags: Tag[];
+
+    @OneToMany(() => Post, post => post.creator)
     posts: Post[];
+
+    @OneToMany(() => Journey, journey => journey.creator)
+    journeys: Journey[];
+
+    @OneToOne(() => Superpower)
+    @JoinColumn({ name: 'superpower_id' })
+    superpower: Superpower;
+
+    @ManyToOne(() => Tribe, tribe => tribe.users)
+    tribes: Tribe[];
     
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
