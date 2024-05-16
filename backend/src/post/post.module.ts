@@ -11,7 +11,7 @@ import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Post]),
-  AuthModule, UserModule],
+    AuthModule, UserModule],
   controllers: [PostController],
   providers: [
     PostService,
@@ -22,4 +22,4 @@ import { UserModule } from 'src/user/user.module';
     }
   ],
 })
-export class PostModule {}
+export class PostModule { }

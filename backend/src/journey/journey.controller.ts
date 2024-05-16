@@ -1,7 +1,7 @@
 
-import { Controller, Get, Post, Body, Param, UseGuards, Req } from '@nestjs/common';
-import { PostService } from './post.service';
-import { CreatePostDto } from './dto/create-post.dto';
+import { Controller, Get, Body, Param, UseGuards, Req, Post } from '@nestjs/common';
+import { JourneyService } from './journey.service';
+import { CreateJourneyDto } from './dto/create-journey.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -9,29 +9,29 @@ import { UserRole } from 'src/user/enum/user-role.enum';
 import { UserService } from 'src/user/user.service';
 import { RequestWithUser } from 'src/types/express-request.interface';
 
-@Controller('posts')
+@Controller('journeys')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
-export class PostController {
+export class JourneyController {
   constructor(
-    private readonly postService: PostService,
+    private readonly journeyService: JourneyService,
     private readonly userService: UserService,
   ) {}
 
   @Post()
-  @Roles(UserRole.USER, UserRole.LEADER)
-  async create(@Body() createPostDto: CreatePostDto, @Req() req: RequestWithUser) {
+  @Roles(UserRole.LEADER)
+  async create(@Body() createJourneyDto: CreateJourneyDto, @Req() req: RequestWithUser) {
     const userId = req.user.id;
     const user = await this.userService.findOne(userId);
-    return this.postService.create(createPostDto, user);
+    return this.journeyService.create(createJourneyDto, user);
   }
 
   @Get()
   findAll() {
-    return this.postService.findAll();
+    return this.journeyService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+    return this.journeyService.findOne(+id);
   }
 }

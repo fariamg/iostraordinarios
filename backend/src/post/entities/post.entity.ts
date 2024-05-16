@@ -1,3 +1,4 @@
+import { Superpower } from "src/superpower/entities/superpower.entity";
 import { Tag } from "src/tag/entities/tag.entity";
 import { User } from "src/user/entities/user.entity";
 import { Like } from "src/like/entities/like.entity";
@@ -9,14 +10,14 @@ export class Post {
   id: number;
 
   @Column({ length: 500, nullable: false })
-  name: string;
+  title: string;
 
   @Column({ length: 500, nullable: false })
   description: string;
 
   @ManyToOne(() => User, user => user.posts, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @JoinColumn({ name: 'creator_id' })
+  creator: User;
 
   @ManyToMany(() => Tag, tag => tag.posts) 
   @JoinTable({ name: 'posts_tags' })
@@ -24,6 +25,9 @@ export class Post {
 
   @OneToMany(() => Like, like => like.post)
   likes: Like[];
+  @ManyToMany(() => Superpower, superpower => superpower.posts) 
+  @JoinTable({ name: 'posts_superpowers' })
+  superpowers: Superpower[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

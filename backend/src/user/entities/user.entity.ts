@@ -5,6 +5,7 @@ import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Tribe } from 'src/tribe/entities/tribe.entity';
 import { Like } from 'src/like/entities/like.entity';
+import { Journey } from 'src/journey/entities/journey.entity';
 
 @Entity('users')
 export class User {
@@ -37,11 +38,13 @@ export class User {
     })
     tags: Tag[];
 
-    @OneToMany(() => Post, post => post.user)
+    @OneToMany(() => Post, post => post.creator)
     posts: Post[];
 
     @OneToMany(() => Like, like => like.user)
     likes: Like[];
+    @OneToMany(() => Journey, journey => journey.creator)
+    journeys: Journey[];
 
     @OneToOne(() => Superpower)
     @JoinColumn({ name: 'superpower_id' })
