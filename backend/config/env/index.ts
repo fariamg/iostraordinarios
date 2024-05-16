@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-export default ()=> ({
+export default () => ({
     app: {
         port: process.env.APP_PORT || 3000,
     },
@@ -12,4 +12,5 @@ export default ()=> ({
         database: process.env.DB_DATABASE,
     },
     jwt_secret: process.env.JWT_SECRET,
-})
+    node_env: process.env.NODE_ENV,
+});
