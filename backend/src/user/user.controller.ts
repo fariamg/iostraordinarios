@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { UserRole } from './enum/user-role.enum';
+import { UserRole } from 'src/common/enums/user-role.enum';
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) {}

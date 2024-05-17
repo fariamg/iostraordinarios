@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { hashPassword } from '../utils/hashing.util';
-import { UserRole } from './enum/user-role.enum';
+import { UserRole } from 'src/common/enums/user-role.enum';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 

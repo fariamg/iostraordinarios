@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { UserRole } from '../enum/user-role.enum';
+import { UserRole } from 'src/common/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';

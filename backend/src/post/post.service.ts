@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { UserRole } from 'src/user/enum/user-role.enum';
+import { UserRole } from 'src/common/enums/user-role.enum';
 
 @Injectable()
 export class PostService {
