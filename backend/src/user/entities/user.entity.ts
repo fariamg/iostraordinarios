@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { UserRole } from 'src/common/enums/user-role.enum';
+import { UserRole } from 'src/@common/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
@@ -12,22 +12,22 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name:'full_name', nullable: false })
+    @Column({ name: 'full_name', nullable: false })
     fullName: string;
 
-    @Column({ name:'password', nullable: false })
+    @Column({ name: 'password', nullable: false })
     password: string;
 
-    @Column({ name:'email', unique: true, nullable: false })
+    @Column({ name: 'email', unique: true, nullable: false })
     email: string;
 
-    @Column({ name:'position', nullable: false })
+    @Column({ name: 'position', nullable: false })
     position: string;
 
     @Column({ type: 'enum', enum: UserRole, nullable: false, default: UserRole.USER })
     role: UserRole;
 
-    @Column({ name:'nuts', nullable: false, default: 0 })
+    @Column({ name: 'nuts', nullable: false, default: 0 })
     nuts: number;
 
     @ManyToMany(() => Tag, tag => tag.users, { eager: true })
@@ -52,13 +52,13 @@ export class User {
 
     @ManyToOne(() => Tribe, tribe => tribe.users)
     tribes: Tribe[];
-    
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
-  
+
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: string;
-  
+
     @DeleteDateColumn({ name: 'deleted_at' })
     deletedAt: string;
 }

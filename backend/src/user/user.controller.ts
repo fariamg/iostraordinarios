@@ -1,10 +1,10 @@
 import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { UserRole } from 'src/common/enums/user-role.enum';
+import { UserRole } from 'src/@common/enums/user-role.enum';
 @Controller('users')
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(private readonly userService: UserService) { }
 
     @Get(':fullName')
     async findOne(@Param('fullName') fullName: string): Promise<User> {
@@ -12,7 +12,7 @@ export class UserController {
     }
 
     @Post()
-    async create(@Body() user: { full_name: string; password: string, email: string, position: string, role: UserRole}): Promise<User> {
+    async create(@Body() user: { full_name: string; password: string, email: string, position: string, role: UserRole }): Promise<User> {
         return this.userService.createUser(user.full_name, user.password, user.email, user.position, user.role);
     }
 
@@ -20,7 +20,7 @@ export class UserController {
     async updateTagsToUser(@Param('id') id: number, @Body() body: { tags: string[] }): Promise<User> {
         return this.userService.updateTagsToUser(id, body.tags);
     }
-  
+
     @Put(':id/superpower')
     async updateSuperpower(@Param('id') id: number, @Body() body: { superpower: string }): Promise<User> {
         return this.userService.updateSuperpower(id, body.superpower);
