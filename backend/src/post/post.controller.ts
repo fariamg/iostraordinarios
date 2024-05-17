@@ -5,7 +5,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/@common/decorators/roles.decorator';
-import { UserRole } from 'src/user/enum/user-role.enum';
+import { UserRole } from '../@common/enums/user-role.enum';
 import { UserService } from 'src/user/user.service';
 import { RequestWithUser } from 'src/@types/express-request.interface';
 

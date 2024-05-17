@@ -10,12 +10,12 @@ export class PostService {
   constructor(
     @InjectRepository(Post)
     private postRepository: Repository<Post>
-  ) {}
+  ) { }
 
   async create(createPostDto: CreatePostDto, creator: User): Promise<Post> {
     const post = this.postRepository.create({
       ...createPostDto,
-      creator, 
+      creator,
     });
     return this.postRepository.save(post);
   }

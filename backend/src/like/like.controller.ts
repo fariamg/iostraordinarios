@@ -8,7 +8,7 @@ export class LikeController {
 
   @Post()
   async create(@Body() createLikeDto: CreateLikeDto) {
-    return this.likeService.createLike(createLikeDto,);
+    return this.likeService.create(createLikeDto);
   }
 
   @Get()

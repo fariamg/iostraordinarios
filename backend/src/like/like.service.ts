@@ -12,7 +12,7 @@ export class LikeService {
     private likeRepository: Repository<Like>
   ) {}
 
-  async createLike(createLikeDto: CreateLikeDto): Promise<Like> {
+  async create(createLikeDto: CreateLikeDto): Promise<Like> {
     const newLike = this.likeRepository.create(createLikeDto);
     return this.likeRepository.save(newLike);
   }
