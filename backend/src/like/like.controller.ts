@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { LikeService } from './like.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 
-@Controller('like')
+@Controller('likes')
 export class LikeController {
   constructor(private readonly likeService: LikeService) {}
 
