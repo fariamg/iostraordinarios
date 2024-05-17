@@ -6,6 +6,7 @@ import { Tag } from 'src/tag/entities/tag.entity';
 import { Tribe } from 'src/tribe/entities/tribe.entity';
 import { Like } from 'src/like/entities/like.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 
 @Entity('users')
 export class User {
@@ -27,8 +28,30 @@ export class User {
     @Column({ type: 'enum', enum: UserRole, nullable: false, default: UserRole.USER })
     role: UserRole;
 
+    @OneToOne(() => Superpower)
+    @JoinColumn({ name: 'superpower_id' })
+    superpower: Superpower;
+
+    @ManyToOne(() => Tribe, tribe => tribe.users)
+    tribes: Tribe[];
+
     @Column({ name: 'nuts', nullable: false, default: 0 })
     nuts: number;
+
+    @Column({ name: 'bio', type: 'text', default: 'Olá, estou usando o app Ioasys Journey'})
+    bio: string;
+
+    @Column({ name: 'avatar', nullable: true })
+    avatar: string;
+
+    @Column({ name: 'interactions_count', nullable: false, default: 0 })
+    interactionsCount: number;
+
+    @Column({ name: 'missions_completed', nullable: false, default: 0 })
+    missionsCompleted: number;
+
+    @Column({ name: 'score', nullable: false, default: 0 })
+    score: number;
 
     @ManyToMany(() => Tag, tag => tag.users, { eager: true })
     @JoinTable({
@@ -38,20 +61,25 @@ export class User {
     })
     tags: Tag[];
 
-    @OneToMany(() => Post, post => post.creator)
-    posts: Post[];
-
-    @OneToMany(() => Like, like => like.user)
-    likes: Like[];
     @OneToMany(() => Journey, journey => journey.creator)
     journeys: Journey[];
 
-    @OneToOne(() => Superpower)
-    @JoinColumn({ name: 'superpower_id' })
-    superpower: Superpower;
+    @OneToMany(() => Post, post => post.creator)
+    posts: Post[];
 
-    @ManyToOne(() => Tribe, tribe => tribe.users)
-    tribes: Tribe[];
+    @ManyToMany(() => Post, post => post.savedBy, { eager: true })
+    @JoinTable({
+        name: 'saved_posts',
+        joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'post_id', referencedColumnName: 'id' }
+    })
+    savedPosts: Post[];
+
+    @OneToMany(() => Like, like => like.user)
+    likes: Like[];
+
+    @OneToMany(() => Comment, comment => comment.user)
+    comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;

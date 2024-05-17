@@ -3,21 +3,23 @@ import { SuperpowerService } from './superpower.service';
 import { SuperpowerController } from './superpower.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Superpower } from './entities/superpower.entity';
-import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AuthModule } from 'src/auth/auth.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Superpower]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([Superpower]),
+    AuthModule,
+    UserModule
+  ],
   controllers: [SuperpowerController],
   providers: [
     SuperpowerService,
-    JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
+    // JwtStrategy,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
 })
 export class SuperpowerModule {}

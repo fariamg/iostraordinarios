@@ -10,8 +10,11 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Like]), 
-  AuthModule, UserModule],
+  imports: [
+    TypeOrmModule.forFeature([Like]), 
+    AuthModule,
+    UserModule
+  ],
   controllers: [LikeController],
   providers: [
     LikeService,
@@ -21,5 +24,6 @@ import { AuthModule } from 'src/auth/auth.module';
       useClass: RolesGuard,
     },
   ],
+  exports: [LikeService],
 })
 export class LikeModule {}

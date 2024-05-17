@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { UserRole } from 'src/@common/enums/user-role.enum';
+import { CreateUserDto } from './dto/create-user.dto';
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) { }
@@ -12,8 +12,8 @@ export class UserController {
     }
 
     @Post()
-    async create(@Body() user: { full_name: string; password: string, email: string, position: string, role: UserRole }): Promise<User> {
-        return this.userService.createUser(user.full_name, user.password, user.email, user.position, user.role);
+    async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+      return this.userService.createUser(createUserDto);
     }
 
     @Put(':id/tags')

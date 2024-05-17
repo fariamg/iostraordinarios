@@ -9,14 +9,23 @@ import { User } from 'src/user/entities/user.entity';
 export class PostService {
   constructor(
     @InjectRepository(Post)
-    private postRepository: Repository<Post>
-  ) { }
+    private postRepository: Repository<Post>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
 
-  async create(createPostDto: CreatePostDto, creator: User): Promise<Post> {
+  async create(createPostDto: CreatePostDto, id: number): Promise<Post> {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
     const post = this.postRepository.create({
       ...createPostDto,
-      creator,
+      creator: user,
     });
+
     return this.postRepository.save(post);
   }
 

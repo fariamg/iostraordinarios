@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
 import { hashPassword } from '../@utils/hashing.util';
-import { UserRole } from '../@common/enums/user-role.enum';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -18,9 +18,18 @@ export class UserService {
         private readonly superpowerRepository: Repository<Superpower>,
     ) { }
 
-    async createUser(fullName: string, password: string, email: string, position: string, role: UserRole): Promise<User> {
+    async createUser(createUserDto: CreateUserDto): Promise<User> {
+        const { fullName, password, email, position, role } = createUserDto;
         const hashedPassword = await hashPassword(password);
-        const user = this.userRepository.create({ fullName, password: hashedPassword, email, position, role });
+    
+        const user = this.userRepository.create({
+          fullName,
+          password: hashedPassword,
+          email,
+          position,
+          role,
+        });
+    
         return this.userRepository.save(user);
     }
 

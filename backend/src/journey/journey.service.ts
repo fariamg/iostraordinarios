@@ -1,28 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateJourneyDto } from './dto/create-journey.dto';
-import { UpdateJourneyDto } from './dto/update-journey.dto';
 import { User } from 'src/user/entities/user.entity';
 import { Journey } from './entities/journey.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Tag } from 'src/tag/entities/tag.entity';
+import { Superpower } from 'src/superpower/entities/superpower.entity';
 
 @Injectable()
 export class JourneyService {
   constructor(
     @InjectRepository(Journey)
-    private journeyRepository: Repository<Journey>
+    private journeyRepository: Repository<Journey>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    @InjectRepository(Tag)
+    private tagRepository: Repository<Tag>,
+    @InjectRepository(Superpower)
+    private superpowerRepository: Repository<Superpower>,
   ) {}
 
-  async create(journeyData: CreateJourneyDto, creator: User): Promise<Journey> {
-    const post = this.journeyRepository.create({
-      ...journeyData,
-      creator, 
+  async create(createJourneyDto: CreateJourneyDto, id: number): Promise<Journey> {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const tags = await this.tagRepository.findByIds(createJourneyDto.tags);
+    const superpowers = await this.superpowerRepository.findByIds(createJourneyDto.superpowers);
+
+    const journey = this.journeyRepository.create({
+      ...createJourneyDto,
+      creator: user,
+      tags,
+      superpowers,
     });
-    return this.journeyRepository.save(post);
+
+    return this.journeyRepository.save(journey);
   }
 
   findAll(): Promise<Journey[]> {
-    return this.journeyRepository.find();
+    return this.journeyRepository.find({ relations: ['creator'] });
   }
 
   findOne(id: number): Promise<Journey> {
