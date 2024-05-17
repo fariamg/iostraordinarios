@@ -1,20 +1,13 @@
 import { User } from "src/user/entities/user.entity";
 import { Post } from "src/post/entities/post.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
-
-enum Type {
-    like = 'like', // 👍
-    claps = 'claps', // 👏
-    heart = 'heart', // ❤️
-    smile = 'smile', // 😄
-}
-
+import { likeFeeling } from "src/@common/enums/like-feeling.enum";
 @Entity({ name: 'likes' })
 export class Like {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ enum: Type, type: 'enum', default: Type.like })
+    @Column({ enum: likeFeeling, type: 'enum', default: likeFeeling.like })
     type: string;
 
     @ManyToOne(() => User, user => user.likes, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
