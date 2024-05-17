@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { AuthPayloadDto } from './dto/auth.dto';
-import { comparePasswords } from 'src/utils/hashing.util';
+import { comparePasswords } from 'src/@utils/hashing.util';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
         private jwtService: JwtService,
         @InjectRepository(User)
         private userRepository: Repository<User>,
-    ) {}
+    ) { }
 
     async validateUser(authPayloadDto: AuthPayloadDto) {
         const { email, password } = authPayloadDto;

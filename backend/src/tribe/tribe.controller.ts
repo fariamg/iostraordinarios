@@ -3,7 +3,7 @@ import { TribeService } from './tribe.service';
 import { CreateTribeDto } from './dto/create-tribe.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { Roles } from 'src/common/decorators/roles.decorator';
+import { Roles } from 'src/@common/decorators/roles.decorator';
 import { UserRole } from 'src/user/enum/user-role.enum';
 
 @Controller('tribes')

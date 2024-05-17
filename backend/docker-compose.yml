@@ -14,4 +14,4 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: kd4p1Sk5sqrtpZ2xvbbzpED7Atqh6yC0
       DB_DATABASE: ioasys_journey_database
-      JWT_SECRET: abc123
+      JWT_SECRET: 7747e6c5-f44d-44b4-9f93-c2098f0f10b3
