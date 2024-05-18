@@ -10,7 +10,6 @@ import { TagModule } from './tag/tag.module';
 import { JourneyModule } from './journey/journey.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt.guard';
-import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { CommentModule } from './comment/comment.module';
     PostModule,
     TagModule,
     JourneyModule,
-    CommentModule,
   ],
   providers: [
     {

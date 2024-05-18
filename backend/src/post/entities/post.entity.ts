@@ -1,9 +1,7 @@
 import { Superpower } from "src/superpower/entities/superpower.entity";
 import { Tag } from "src/tag/entities/tag.entity";
 import { User } from "src/user/entities/user.entity";
-import { Like } from "src/like/entities/like.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Comment } from 'src/comment/entities/comment.entity';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'posts' })
 export class Post {
@@ -27,15 +25,9 @@ export class Post {
   @JoinTable({ name: 'posts_tags' })
   tags: Tag[];
 
-  @OneToMany(() => Like, like => like.post)
-  likes: Like[];
-  
-  @ManyToMany(() => Superpower, superpower => superpower.posts) 
+  @ManyToMany(() => Superpower, superpower => superpower.posts)
   @JoinTable({ name: 'posts_superpowers' })
   superpowers: Superpower[];
-
-  @OneToMany(() => Comment, comment => comment.publish)
-  comments: Comment[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

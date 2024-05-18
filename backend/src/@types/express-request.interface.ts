@@ -6,8 +6,4 @@ export interface RequestWithUser extends Request {
     fullName: string;
     role: string
   };
-
-  post: {
-    id: number;
-  };
 }
