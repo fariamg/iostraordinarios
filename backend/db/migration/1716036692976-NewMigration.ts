@@ -1,17 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class NewMigration1716002385273 implements MigrationInterface {
-    name = 'NewMigration1716002385273'
+export class NewMigration1716036692976 implements MigrationInterface {
+    name = 'NewMigration1716036692976'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "tags" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, CONSTRAINT "UQ_d90243459a697eadb8ad56e9092" UNIQUE ("name"), CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "journeys" ("id" SERIAL NOT NULL, "title" character varying(500) NOT NULL, "description" character varying(500) NOT NULL, "nuts" integer NOT NULL DEFAULT '0', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "user_id" integer NOT NULL, CONSTRAINT "PK_94b31b067846c92b6811046c81e" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "superpowers" ("id" SERIAL NOT NULL, "name" character varying(500) NOT NULL, CONSTRAINT "PK_0a0d1cd74366483a42bab3055e1" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "likes" ("id" SERIAL NOT NULL, "type" "public"."likes_type_enum" NOT NULL DEFAULT 'like', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "user_id" integer, "post_id" integer, CONSTRAINT "PK_a9323de3f8bced7539a794b4a37" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "comments" ("id" SERIAL NOT NULL, "text" text NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "user_id" integer NOT NULL, "post_id" integer NOT NULL, CONSTRAINT "PK_8bf68bc960f2b69e818bdb90dcb" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "posts" ("id" SERIAL NOT NULL, "title" character varying(500) NOT NULL, "description" character varying(500) NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "creator_id" integer NOT NULL, CONSTRAINT "PK_2829ac61eff60fcec60d7274b9e" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "tribes" ("id" SERIAL NOT NULL, "name" character varying(500) NOT NULL, "description" character varying(500) NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, CONSTRAINT "PK_1a548c615b0edfa360875349896" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "full_name" character varying NOT NULL, "password" character varying NOT NULL, "email" character varying NOT NULL, "position" character varying NOT NULL, "role" "public"."users_role_enum" NOT NULL DEFAULT 'user', "nuts" integer NOT NULL DEFAULT '0', "bio" text NOT NULL DEFAULT 'Olá, estou usando o app Ioasys Journey', "avatar" character varying, "interactions_count" integer NOT NULL DEFAULT '0', "missions_completed" integer NOT NULL DEFAULT '0', "score" integer NOT NULL DEFAULT '0', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "superpowerId" integer, "tribesId" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "full_name" character varying NOT NULL, "password" character varying NOT NULL, "email" character varying NOT NULL, "position" character varying NOT NULL, "role" "public"."users_role_enum" NOT NULL DEFAULT 'user', "nuts" integer NOT NULL DEFAULT '0', "bio" text NOT NULL DEFAULT 'Olá, estou usando o app Ioasys Journey', "avatar" character varying, "interactions_count" integer NOT NULL DEFAULT '0', "missions_completed" integer NOT NULL DEFAULT '0', "score" integer NOT NULL DEFAULT '0', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "superpowerId" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "journeys_users" ("journeysId" integer NOT NULL, "usersId" integer NOT NULL, CONSTRAINT "PK_f43dc8637507d3c55f98e0da1f3" PRIMARY KEY ("journeysId", "usersId"))`);
         await queryRunner.query(`CREATE INDEX "IDX_976a09073749651ca0171e097d" ON "journeys_users" ("journeysId") `);
         await queryRunner.query(`CREATE INDEX "IDX_a3dba0b04f0ea1dc47cb41f9d7" ON "journeys_users" ("usersId") `);
@@ -34,13 +31,8 @@ export class NewMigration1716002385273 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_78c961371a509e86d789714dd4" ON "saved_posts" ("user_id") `);
         await queryRunner.query(`CREATE INDEX "IDX_116e9df57f5221cc1a77c3d1cf" ON "saved_posts" ("post_id") `);
         await queryRunner.query(`ALTER TABLE "journeys" ADD CONSTRAINT "FK_6479cea41ce0ce155e8bbb7c85c" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "likes" ADD CONSTRAINT "FK_3f519ed95f775c781a254089171" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
-        await queryRunner.query(`ALTER TABLE "likes" ADD CONSTRAINT "FK_741df9b9b72f328a6d6f63e79ff" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
-        await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_4c675567d2a58f0b07cef09c13d" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_259bf9825d9d198608d1b46b0b5" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "posts" ADD CONSTRAINT "FK_c810f0ccb5f80b289391454d4ad" FOREIGN KEY ("creator_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "users" ADD CONSTRAINT "FK_659b5a8419cefc2425a4e72676a" FOREIGN KEY ("superpowerId") REFERENCES "superpowers"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "users" ADD CONSTRAINT "FK_c1088ace5f597dbad354bebb5ad" FOREIGN KEY ("tribesId") REFERENCES "tribes"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "journeys_users" ADD CONSTRAINT "FK_976a09073749651ca0171e097d9" FOREIGN KEY ("journeysId") REFERENCES "journeys"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
         await queryRunner.query(`ALTER TABLE "journeys_users" ADD CONSTRAINT "FK_a3dba0b04f0ea1dc47cb41f9d7e" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "journeys_tags" ADD CONSTRAINT "FK_7fd3c4bc3b3e4588deccf791422" FOREIGN KEY ("journeysId") REFERENCES "journeys"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
@@ -72,13 +64,8 @@ export class NewMigration1716002385273 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "journeys_tags" DROP CONSTRAINT "FK_7fd3c4bc3b3e4588deccf791422"`);
         await queryRunner.query(`ALTER TABLE "journeys_users" DROP CONSTRAINT "FK_a3dba0b04f0ea1dc47cb41f9d7e"`);
         await queryRunner.query(`ALTER TABLE "journeys_users" DROP CONSTRAINT "FK_976a09073749651ca0171e097d9"`);
-        await queryRunner.query(`ALTER TABLE "users" DROP CONSTRAINT "FK_c1088ace5f597dbad354bebb5ad"`);
         await queryRunner.query(`ALTER TABLE "users" DROP CONSTRAINT "FK_659b5a8419cefc2425a4e72676a"`);
         await queryRunner.query(`ALTER TABLE "posts" DROP CONSTRAINT "FK_c810f0ccb5f80b289391454d4ad"`);
-        await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_259bf9825d9d198608d1b46b0b5"`);
-        await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_4c675567d2a58f0b07cef09c13d"`);
-        await queryRunner.query(`ALTER TABLE "likes" DROP CONSTRAINT "FK_741df9b9b72f328a6d6f63e79ff"`);
-        await queryRunner.query(`ALTER TABLE "likes" DROP CONSTRAINT "FK_3f519ed95f775c781a254089171"`);
         await queryRunner.query(`ALTER TABLE "journeys" DROP CONSTRAINT "FK_6479cea41ce0ce155e8bbb7c85c"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_116e9df57f5221cc1a77c3d1cf"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_78c961371a509e86d789714dd4"`);
@@ -102,10 +89,7 @@ export class NewMigration1716002385273 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_976a09073749651ca0171e097d"`);
         await queryRunner.query(`DROP TABLE "journeys_users"`);
         await queryRunner.query(`DROP TABLE "users"`);
-        await queryRunner.query(`DROP TABLE "tribes"`);
         await queryRunner.query(`DROP TABLE "posts"`);
-        await queryRunner.query(`DROP TABLE "comments"`);
-        await queryRunner.query(`DROP TABLE "likes"`);
         await queryRunner.query(`DROP TABLE "superpowers"`);
         await queryRunner.query(`DROP TABLE "journeys"`);
         await queryRunner.query(`DROP TABLE "tags"`);

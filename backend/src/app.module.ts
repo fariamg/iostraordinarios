@@ -7,10 +7,7 @@ import { dataSourceOptions } from '../db/data-source';
 import { SuperpowerModule } from './superpower/superpower.module';
 import { PostModule } from './post/post.module';
 import { TagModule } from './tag/tag.module';
-import { TribeModule } from './tribe/tribe.module';
-import { LikeModule } from './like/like.module';
 import { JourneyModule } from './journey/journey.module';
-import { CommentModule } from './comment/comment.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
@@ -26,10 +23,7 @@ import { JwtAuthGuard } from './auth/guards/jwt.guard';
     SuperpowerModule,
     PostModule,
     TagModule,
-    TribeModule,
-    LikeModule,
     JourneyModule,
-    CommentModule,
   ],
   providers: [
     {

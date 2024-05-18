@@ -3,10 +3,7 @@ import { UserRole } from 'src/@common/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
-import { Tribe } from 'src/tribe/entities/tribe.entity';
-import { Like } from 'src/like/entities/like.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
-import { Comment } from 'src/comment/entities/comment.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity('users')
@@ -32,9 +29,6 @@ export class User {
 
     @ManyToOne(() => Superpower, { eager: true })
     superpower: Superpower;
-
-    @ManyToOne(() => Tribe, tribe => tribe.users)
-    tribes: Tribe[];
 
     @Column({ name: 'nuts', nullable: false, default: 0 })
     nuts: number;
@@ -75,12 +69,6 @@ export class User {
         inverseJoinColumn: { name: 'post_id', referencedColumnName: 'id' }
     })
     savedPosts: Post[];
-
-    @OneToMany(() => Like, like => like.user)
-    likes: Like[];
-
-    @OneToMany(() => Comment, comment => comment.user)
-    comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
