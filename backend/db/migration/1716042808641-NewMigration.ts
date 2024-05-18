@@ -1,13 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class NewMigration1716036692976 implements MigrationInterface {
-    name = 'NewMigration1716036692976'
+export class NewMigration1716042808641 implements MigrationInterface {
+    name = 'NewMigration1716042808641'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "tags" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, CONSTRAINT "UQ_d90243459a697eadb8ad56e9092" UNIQUE ("name"), CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "journeys" ("id" SERIAL NOT NULL, "title" character varying(500) NOT NULL, "description" character varying(500) NOT NULL, "nuts" integer NOT NULL DEFAULT '0', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "user_id" integer NOT NULL, CONSTRAINT "PK_94b31b067846c92b6811046c81e" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "superpowers" ("id" SERIAL NOT NULL, "name" character varying(500) NOT NULL, CONSTRAINT "PK_0a0d1cd74366483a42bab3055e1" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "posts" ("id" SERIAL NOT NULL, "title" character varying(500) NOT NULL, "description" character varying(500) NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "creator_id" integer NOT NULL, CONSTRAINT "PK_2829ac61eff60fcec60d7274b9e" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TYPE "public"."users_role_enum" AS ENUM('admin', 'leader', 'user')`);
         await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "full_name" character varying NOT NULL, "password" character varying NOT NULL, "email" character varying NOT NULL, "position" character varying NOT NULL, "role" "public"."users_role_enum" NOT NULL DEFAULT 'user', "nuts" integer NOT NULL DEFAULT '0', "bio" text NOT NULL DEFAULT 'Olá, estou usando o app Ioasys Journey', "avatar" character varying, "interactions_count" integer NOT NULL DEFAULT '0', "missions_completed" integer NOT NULL DEFAULT '0', "score" integer NOT NULL DEFAULT '0', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "superpowerId" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "journeys_users" ("journeysId" integer NOT NULL, "usersId" integer NOT NULL, CONSTRAINT "PK_f43dc8637507d3c55f98e0da1f3" PRIMARY KEY ("journeysId", "usersId"))`);
         await queryRunner.query(`CREATE INDEX "IDX_976a09073749651ca0171e097d" ON "journeys_users" ("journeysId") `);
@@ -89,6 +90,7 @@ export class NewMigration1716036692976 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_976a09073749651ca0171e097d"`);
         await queryRunner.query(`DROP TABLE "journeys_users"`);
         await queryRunner.query(`DROP TABLE "users"`);
+        await queryRunner.query(`DROP TYPE "public"."users_role_enum"`);
         await queryRunner.query(`DROP TABLE "posts"`);
         await queryRunner.query(`DROP TABLE "superpowers"`);
         await queryRunner.query(`DROP TABLE "journeys"`);
