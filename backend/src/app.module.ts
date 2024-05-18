@@ -10,6 +10,7 @@ import { TagModule } from './tag/tag.module';
 import { TribeModule } from './tribe/tribe.module';
 import { LikeModule } from './like/like.module';
 import { JourneyModule } from './journey/journey.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { JourneyModule } from './journey/journey.module';
     TribeModule,
     LikeModule,
     JourneyModule,
+    CommentModule,
   ],
 })
 export class AppModule {}

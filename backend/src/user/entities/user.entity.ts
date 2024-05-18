@@ -6,6 +6,7 @@ import { Tag } from 'src/tag/entities/tag.entity';
 import { Tribe } from 'src/tribe/entities/tribe.entity';
 import { Like } from 'src/like/entities/like.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 
 @Entity('users')
 export class User {
@@ -52,6 +53,9 @@ export class User {
 
     @ManyToOne(() => Tribe, tribe => tribe.users)
     tribes: Tribe[];
+
+    @OneToMany(() => Comment, comment => comment.creator)
+    comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
