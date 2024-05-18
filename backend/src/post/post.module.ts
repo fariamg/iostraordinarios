@@ -21,5 +21,6 @@ import { UserModule } from 'src/user/user.module';
       useClass: RolesGuard
     }
   ],
+  exports: [PostService]
 })
 export class PostModule { }

@@ -25,8 +25,7 @@ export class CommentController {
     const userId = req.user.id;
     const user = await this.userService.findOne(userId);
 
-    const postId = req.post.id;
-    const post = await this.postService.findOne(postId);
+    const post = await this.postService.findOne(createCommentDto.postId);
 
     return this.commentService.create(createCommentDto, user, post);
   }
