@@ -5,6 +5,7 @@ import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
 import { Exclude } from 'class-transformer';
+import { Comment } from 'src/comment/entities/comment.entity';
 
 @Entity('users')
 export class User {
@@ -69,6 +70,9 @@ export class User {
         inverseJoinColumn: { name: 'post_id', referencedColumnName: 'id' }
     })
     savedPosts: Post[];
+
+    @OneToMany(() => Comment, comment => comment.creator)
+    comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
