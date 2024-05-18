@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Ioasys Journey API')
-    .setDescription('The Ioasys Journey API description')
+    .setDescription('The Ioasys Journey API')
     .setVersion('1.0')
     .addTag('nestjs')
     .build();

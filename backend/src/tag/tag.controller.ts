@@ -1,34 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { TagService } from './tag.service';
-import { CreateTagDto } from './dto/create-tag.dto';
-import { UpdateTagDto } from './dto/update-tag.dto';
+import { Tag } from './entities/tag.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('tags')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class TagController {
   constructor(private readonly tagService: TagService) {}
 
-  @Post()
-  create(@Body() createTagDto: CreateTagDto) {
-    return this.tagService.create(createTagDto);
-  }
-
   @Get()
-  findAll() {
+  async findAll(): Promise<Tag[]> {
     return this.tagService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Tag> {
     return this.tagService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTagDto: UpdateTagDto) {
-    return this.tagService.update(+id, updateTagDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tagService.remove(+id);
-  }
 }

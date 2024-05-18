@@ -1,28 +1,53 @@
-import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
+import { Controller, Get, Param, Body, Patch, Post, UseGuards, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { UserRole } from 'src/@common/enums/user-role.enum';
+import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { Request } from 'express'; // Importação adicionada
+import { Public } from 'src/@common/decorators/public.decorator';
+
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-    @Get(':fullName')
+    // Adicionando rota /me
+    @UseGuards(JwtAuthGuard)
+    @Get('me')
+    async getMe(@Req() req: Request): Promise<User> {
+        const userId = req.user['id']; // Extraindo o ID do usuário a partir do JWT token
+        return this.userService.findOne(userId);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get()
+    async findAll(): Promise<User[]> {
+        return this.userService.findAll();
+    }
+
+    @Get(':id')
+    async findOneById(@Param('id') id: number): Promise<User> {
+        return this.userService.findOne(id);
+    }
+
+    @Get('fullName/:fullName')
     async findOne(@Param('fullName') fullName: string): Promise<User> {
         return this.userService.findOneByfullName(fullName);
     }
 
+    @Public()
     @Post()
-    async create(@Body() user: { full_name: string; password: string, email: string, position: string, role: UserRole }): Promise<User> {
-        return this.userService.createUser(user.full_name, user.password, user.email, user.position, user.role);
+    async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+        return this.userService.createUser(createUserDto);
     }
 
-    @Put(':id/tags')
+    @Patch(':id/tags')
     async updateTagsToUser(@Param('id') id: number, @Body() body: { tags: string[] }): Promise<User> {
         return this.userService.updateTagsToUser(id, body.tags);
     }
 
-    @Put(':id/superpower')
+    @Patch(':id/superpower')
     async updateSuperpower(@Param('id') id: number, @Body() body: { superpower: string }): Promise<User> {
         return this.userService.updateSuperpower(id, body.superpower);
     }
+
 }
