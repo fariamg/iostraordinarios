@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
 import { UserRole } from 'src/@common/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
@@ -7,6 +7,7 @@ import { Tribe } from 'src/tribe/entities/tribe.entity';
 import { Like } from 'src/like/entities/like.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
 import { Comment } from 'src/comment/entities/comment.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -17,6 +18,7 @@ export class User {
     fullName: string;
 
     @Column({ name: 'password', nullable: false })
+    @Exclude()
     password: string;
 
     @Column({ name: 'email', unique: true, nullable: false })
@@ -28,8 +30,7 @@ export class User {
     @Column({ type: 'enum', enum: UserRole, nullable: false, default: UserRole.USER })
     role: UserRole;
 
-    @OneToOne(() => Superpower)
-    @JoinColumn({ name: 'superpower_id' })
+    @ManyToOne(() => Superpower, { eager: true })
     superpower: Superpower;
 
     @ManyToOne(() => Tribe, tribe => tribe.users)

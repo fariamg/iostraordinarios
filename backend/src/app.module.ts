@@ -11,6 +11,8 @@ import { TribeModule } from './tribe/tribe.module';
 import { LikeModule } from './like/like.module';
 import { JourneyModule } from './journey/journey.module';
 import { CommentModule } from './comment/comment.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
 @Module({
   imports: [
@@ -28,6 +30,12 @@ import { CommentModule } from './comment/comment.module';
     LikeModule,
     JourneyModule,
     CommentModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule { }

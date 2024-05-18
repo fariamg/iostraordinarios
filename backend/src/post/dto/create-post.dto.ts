@@ -6,4 +6,10 @@ export class CreatePostDto {
 
     @ApiProperty()
     description: string;
+
+    @ApiProperty()
+    tags: number[]; 
+
+    @ApiProperty()
+    superpowers: number[]; 
 }

@@ -5,7 +5,8 @@ import { hashPassword } from '../@utils/hashing.util';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -19,26 +20,50 @@ export class UserService {
     ) { }
 
     async createUser(createUserDto: CreateUserDto): Promise<User> {
-        const { fullName, password, email, position, role } = createUserDto;
+        const { fullName, password, email, position, role, superpowerId, tagIds } = createUserDto;
         const hashedPassword = await hashPassword(password);
-    
+
+        const superpower = await this.superpowerRepository.findOne({ where: { id: superpowerId } });
+        if (!superpower) {
+            throw new NotFoundException('Superpoder não encontrado');
+        }
+
+        let tags = [];
+        if (tagIds && tagIds.length > 0) {
+            tags = await this.tagRepository.find({ where: { id: In(tagIds) } });
+            if (tags.length !== tagIds.length) {
+                throw new NotFoundException('Uma ou mais tags não encontradas');
+            }
+        }
+
         const user = this.userRepository.create({
-          fullName,
-          password: hashedPassword,
-          email,
-          position,
-          role,
+            fullName,
+            password: hashedPassword,
+            email,
+            position,
+            role,
+            superpower,
+            tags,
         });
-    
-        return this.userRepository.save(user);
+
+        const savedUser = await this.userRepository.save(user);
+        return plainToInstance(User, savedUser);
     }
 
     async findOne(id: number): Promise<User | undefined> {
-        return this.userRepository.findOneBy({ id });
+        const user = await this.userRepository.findOne({ where: { id }, relations: ['tags', 'superpower'] });
+        if (user) {
+            delete user.password;
+        }
+        return user;   
     }
 
     async findOneByfullName(fullName: string): Promise<User | undefined> {
         return this.userRepository.findOne({ where: { fullName } });
+    }
+
+    async findAll(): Promise<User[]> {
+        return this.userRepository.find();
     }
 
     async updateTagsToUser(userId: number, tagNames: string[]): Promise<User> {

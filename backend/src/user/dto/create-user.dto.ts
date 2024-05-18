@@ -16,4 +16,10 @@ export class CreateUserDto {
 
     @ApiProperty()
     role: UserRole;
+
+    @ApiProperty()
+    superpowerId: number; 
+
+    @ApiProperty({ type: [Number] })
+    tagIds: number[]; 
 }

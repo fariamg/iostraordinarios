@@ -20,7 +20,7 @@ import { RolesGuard } from './guards/roles.guard';
         JwtModule.registerAsync({
             useFactory: async () => ({
                 secret: env().jwt_secret,
-                signOptions: { expiresIn: '1d' },
+                signOptions: { expiresIn: '60d' },
             }),
             inject: [ConfigService],
         }),
