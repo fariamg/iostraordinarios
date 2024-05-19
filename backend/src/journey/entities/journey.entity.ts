@@ -38,7 +38,4 @@ export class Journey {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: string;
 }

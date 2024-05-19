@@ -1,5 +1,5 @@
 import { Journey } from "src/journey/entities/journey.entity";
-import { Post } from "src/post/entities/post.entity";
+import { Publish } from "src/publish/entities/publish.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -14,8 +14,8 @@ export class Tag {
     @ManyToMany(() => User, user => user.tags)
     users: User[];
 
-    @ManyToMany(() => Post, post => post.tags)
-    posts: Post[];
+    @ManyToMany(() => Publish, publish => publish.tags)
+    publishes: Publish[];
 
     @ManyToMany(() => Journey, user => user.tags)
     journeys: Journey[];

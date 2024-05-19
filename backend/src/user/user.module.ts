@@ -4,14 +4,14 @@ import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { Tag } from 'src/tag/entities/tag.entity';
-import { Post } from 'src/post/entities/post.entity';
+import { Publish } from 'src/publish/entities/publish.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Tag, Post, Superpower, Journey]),
+    TypeOrmModule.forFeature([User, Tag, Publish, Superpower, Journey]),
     AuthModule,
   ],
   providers: [UserService],

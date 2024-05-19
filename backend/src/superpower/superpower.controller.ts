@@ -1,12 +1,12 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { SuperpowerService } from './superpower.service';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Public } from 'src/@common/decorators/public.decorator';
 
 @Controller('superpowers')
-@UseGuards(RolesGuard) 
 export class SuperpowerController {
   constructor(private readonly superpowerService: SuperpowerService) {}
 
+  @Public()
   @Get()
   findAll() {
     return this.superpowerService.findAll();

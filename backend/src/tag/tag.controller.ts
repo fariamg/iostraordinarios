@@ -1,14 +1,13 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { TagService } from './tag.service';
 import { Tag } from './entities/tag.entity';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Public } from 'src/@common/decorators/public.decorator';
 
 @Controller('tags')
-@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class TagController {
   constructor(private readonly tagService: TagService) {}
 
+  @Public()
   @Get()
   async findAll(): Promise<Tag[]> {
     return this.tagService.findAll();

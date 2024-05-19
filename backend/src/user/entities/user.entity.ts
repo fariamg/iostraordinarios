@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
 import { UserRole } from 'src/@common/enums/user-role.enum';
-import { Post } from 'src/post/entities/post.entity';
+import { Publish } from 'src/publish/entities/publish.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
@@ -59,23 +59,20 @@ export class User {
     @OneToMany(() => Journey, journey => journey.creator)
     journeys: Journey[];
 
-    @OneToMany(() => Post, post => post.creator)
-    posts: Post[];
+    @OneToMany(() => Publish, publish => publish.creator)
+    publishes: Publish[];
 
-    @ManyToMany(() => Post, post => post.savedBy, { eager: true })
+    @ManyToMany(() => Publish, publish => publish.savedBy, { eager: true })
     @JoinTable({
-        name: 'saved_posts',
+        name: 'saved_publishes',
         joinColumn: { name: 'user_id', referencedColumnName: 'id' },
-        inverseJoinColumn: { name: 'post_id', referencedColumnName: 'id' }
+        inverseJoinColumn: { name: 'publish_id', referencedColumnName: 'id' }
     })
-    savedPosts: Post[];
+    savedPublishes: Publish[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: string;
-
-    @DeleteDateColumn({ name: 'deleted_at' })
-    deletedAt: string;
 }
