@@ -2,8 +2,8 @@ import 'dotenv/config';
 
 export default () => ({
     app: {
-        port: process.env.APP_PORT || 10000,
-        host: process.env.APP_HOST || '0.0.0.0',
+        port: process.env.PORT || 10000,
+        host: '0.0.0.0',
     },
     database: {
         host: process.env.DB_HOST,
