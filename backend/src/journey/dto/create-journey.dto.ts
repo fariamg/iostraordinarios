@@ -10,9 +10,9 @@ export class CreateJourneyDto {
     @ApiProperty()
     nuts: number;
 
-    @ApiProperty()
-    tags: number[];
+    @ApiProperty({ type: [Number] })
+    tagsId: number[];
 
-    @ApiProperty()
-    superpowers: number[];
+    @ApiProperty({ type: [Number] })
+    superpowersId: number[];
 }

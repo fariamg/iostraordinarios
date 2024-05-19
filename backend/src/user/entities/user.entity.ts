@@ -62,6 +62,7 @@ export class User {
 
     @OneToMany(() => Like, like => like.creator)
     likes: Like[];
+    
     @OneToMany(() => Journey, journey => journey.creator)
     journeys: Journey[];
 

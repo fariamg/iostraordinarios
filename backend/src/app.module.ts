@@ -10,6 +10,7 @@ import { JourneyModule } from './journey/journey.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt.guard';
 import { PublishModule } from './publish/publish.module';
+import { LikeModule } from './like/like.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PublishModule } from './publish/publish.module';
     PublishModule,
     TagModule,
     JourneyModule,
+    LikeModule,
   ],
   providers: [
     {

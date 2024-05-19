@@ -1,7 +1,8 @@
 import { User } from "src/user/entities/user.entity";
-import { Post } from "src/post/entities/post.entity";
+import { Publish } from "src/publish/entities/publish.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
 import { LikeFeeling } from "src/@common/enums/like-feeling.enum";
+
 @Entity({ name: 'likes' })
 export class Like {
     @PrimaryGeneratedColumn()
@@ -14,9 +15,9 @@ export class Like {
     @JoinColumn({ name: 'user_id' })
     creator: User;
 
-    @ManyToOne(() => Post, post => post.likes, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'post_id' })
-    publish: Post;
+    @ManyToOne(() => Publish, publish => publish.likes, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'publish_id' })
+    publish: Publish;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;

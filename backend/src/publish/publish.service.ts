@@ -28,10 +28,10 @@ export class PublishService {
     }
 
     const tags = await this.tagRepository.find({
-      where: { id: In(createPublishDto.tags) },
+      where: { id: In(createPublishDto.tagsId) },
     });
     const superpowers = await this.superpowerRepository.find({
-      where: { id: In(createPublishDto.superpowers) },
+      where: { id: In(createPublishDto.superpowersId) },
     });
 
     if (!tags || tags.length === 0) {
@@ -53,7 +53,7 @@ export class PublishService {
   }
 
   findAll(): Promise<Publish[]> {
-    return this.publishRepository.find();
+    return this.publishRepository.find({ relations: ['creator', 'superpowers', 'tags'] });
   }
 
   findOne(id: number): Promise<Publish> {

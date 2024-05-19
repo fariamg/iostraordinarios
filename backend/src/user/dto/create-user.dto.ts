@@ -21,5 +21,5 @@ export class CreateUserDto {
     superpowerId: number; 
 
     @ApiProperty({ type: [Number] })
-    tagIds: number[]; 
+    tagsId: number[]; 
 }

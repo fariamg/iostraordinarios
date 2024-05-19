@@ -6,7 +6,6 @@ import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Publish } from 'src/publish/entities/publish.entity';
 
-
 @Injectable()
 export class LikeService {
   constructor(
@@ -15,13 +14,11 @@ export class LikeService {
   ) {}
 
   async create(createLikeDto: CreateLikeDto, creator: User, publish: Publish): Promise<Like> {
-    const newLike = this.likeRepository.create(
-      {
-        ...CreateLikeDto, 
-      creator, 
+    const newLike = this.likeRepository.create({
+      ...createLikeDto,
+      creator,
       publish,
-    }
-    );
+    });
     return this.likeRepository.save(newLike);
   }
 

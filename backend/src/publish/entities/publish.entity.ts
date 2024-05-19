@@ -1,7 +1,8 @@
+import { Like } from "src/like/entities/like.entity";
 import { Superpower } from "src/superpower/entities/superpower.entity";
 import { Tag } from "src/tag/entities/tag.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'publishes' })
 export class Publish {
@@ -28,6 +29,9 @@ export class Publish {
   @ManyToMany(() => Superpower, superpower => superpower.publishes)
   @JoinTable({ name: 'publishes_superpowers' })
   superpowers: Superpower[];
+
+  @OneToMany(() => Like, like => like.publish)
+  likes: Like[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

@@ -7,9 +7,9 @@ export class CreatePublishDto {
     @ApiProperty()
     description: string;
 
-    @ApiProperty()
-    tags: number[]; 
+    @ApiProperty({ type: [Number] })
+    tagsId: number[]; 
 
-    @ApiProperty()
-    superpowers: number[]; 
+    @ApiProperty({ type: [Number] })
+    superpowersId: number[]; 
 }

@@ -20,7 +20,7 @@ export class UserService {
     ) { }
 
     async createUser(createUserDto: CreateUserDto): Promise<User> {
-        const { fullName, password, email, position, role, superpowerId, tagIds } = createUserDto;
+        const { fullName, password, email, position, role, superpowerId, tagsId } = createUserDto;
         const hashedPassword = await hashPassword(password);
 
         const superpower = await this.superpowerRepository.findOne({ where: { id: superpowerId } });
@@ -29,9 +29,9 @@ export class UserService {
         }
 
         let tags = [];
-        if (tagIds && tagIds.length > 0) {
-            tags = await this.tagRepository.find({ where: { id: In(tagIds) } });
-            if (tags.length !== tagIds.length) {
+        if (tagsId && tagsId.length > 0) {
+            tags = await this.tagRepository.find({ where: { id: In(tagsId) } });
+            if (tags.length !== tagsId.length) {
                 throw new NotFoundException('Uma ou mais tags não encontradas');
             }
         }

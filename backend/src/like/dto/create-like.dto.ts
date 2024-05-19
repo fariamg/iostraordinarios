@@ -3,8 +3,8 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateLikeDto {
     @ApiProperty()
-    publishId: number;
+    type: LikeFeeling;
     
     @ApiProperty()
-    type: LikeFeeling;
+    publishId: number;
 }
