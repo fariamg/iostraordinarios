@@ -16,7 +16,7 @@ export class User {
     @Column({ name: 'full_name', nullable: false })
     fullName: string;
 
-    @Column({ name: 'password', nullable: false })
+    @Column({ name: 'password', nullable: false, select: false})
     password: string;
 
     @Column({ name: 'email', unique: true, nullable: false })
@@ -42,7 +42,7 @@ export class User {
     @OneToMany(() => Post, post => post.creator)
     posts: Post[];
 
-    @OneToMany(() => Like, like => like.user)
+    @OneToMany(() => Like, like => like.creator)
     likes: Like[];
     @OneToMany(() => Journey, journey => journey.creator)
     journeys: Journey[];
