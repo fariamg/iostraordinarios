@@ -44,7 +44,7 @@ export class User {
     interactionsCount: number;
 
     @Column({ name: 'missions_completed', nullable: false, default: 0 })
-    missionsCompleted: number;
+    journeysCompleted: number;
 
     @Column({ name: 'score', nullable: false, default: 0 })
     score: number;
@@ -65,6 +65,9 @@ export class User {
 
     @OneToMany(() => Publish, publish => publish.creator)
     publishes: Publish[];
+
+    @Column({ name: 'publishes_count', nullable: false, default: 0 })
+    publishesCount: number;
 
     @ManyToMany(() => Publish, publish => publish.savedBy, { eager: true })
     @JoinTable({

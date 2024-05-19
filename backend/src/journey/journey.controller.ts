@@ -25,11 +25,13 @@ export class JourneyController {
     return this.journeyService.create(createJourneyDto, userId);
   }
 
+  @ApiBearerAuth('KEY_AUTH')
   @Get()
   findAll() {
     return this.journeyService.findAll();
   }
 
+  @ApiBearerAuth('KEY_AUTH')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.journeyService.findOne(+id);
