@@ -10,6 +10,6 @@ COPY . .
 
 RUN yarn build
 
-EXPOSE 3000
+EXPOSE 10000
 
 CMD yarn migration:run && yarn start:prod
