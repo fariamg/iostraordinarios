@@ -57,9 +57,6 @@ export class User {
     })
     tags: Tag[];
 
-    @OneToMany(() => Publish, publish => publish.creator)
-    publishs: Publish[];
-
     @OneToMany(() => Like, like => like.creator)
     likes: Like[];
     

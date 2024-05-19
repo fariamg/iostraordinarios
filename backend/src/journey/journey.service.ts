@@ -21,7 +21,7 @@ export class JourneyService {
   ) {}
 
   async create(createJourneyDto: CreateJourneyDto, id: number): Promise<Journey> {
-    const user = await this.userRepository.findOne({ where: { id }, relations: ['superpowers', 'tags'] });
+    const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
       throw new NotFoundException('User not found');

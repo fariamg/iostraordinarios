@@ -14,7 +14,7 @@ export class UserController {
     @UseGuards(JwtAuthGuard)
     @Get('me')
     async getMe(@Req() req: Request): Promise<User> {
-        const userId = req.user['id']; // Extraindo o ID do usuário a partir do JWT token
+        const userId = req.user['id']; 
         return this.userService.findOne(userId);
     }
 

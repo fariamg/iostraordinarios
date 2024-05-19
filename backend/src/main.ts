@@ -12,7 +12,16 @@ async function bootstrap() {
     .setDescription('The Ioasys Journey API')
     .setVersion('1.0')
     .addTag('nestjs')
-    .build();
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'Authorization',
+      description: 'Enter JWT token',
+      in: 'header',
+    }, 'KEY_AUTH')
+    .build()
+  
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

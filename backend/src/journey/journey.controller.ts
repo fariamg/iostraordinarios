@@ -7,6 +7,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/@common/decorators/roles.decorator';
 import { UserRole } from '../@common/enums/user-role.enum';
 import { UserService } from 'src/user/user.service';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('journeys')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
@@ -18,6 +19,7 @@ export class JourneyController {
 
   @Post()
   @Roles(UserRole.LEADER)
+  @ApiBearerAuth('KEY_AUTH')
   async create(@Body() createJourneyDto: CreateJourneyDto, @Request() req) {
     const userId = req.user.id;
     return this.journeyService.create(createJourneyDto, userId);
