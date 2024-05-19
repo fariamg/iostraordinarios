@@ -5,6 +5,7 @@ import { Superpower } from 'src/superpower/entities/superpower.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
 import { Exclude } from 'class-transformer';
+import { Like } from 'src/like/entities/like.entity';
 
 @Entity('users')
 export class User {
@@ -56,6 +57,11 @@ export class User {
     })
     tags: Tag[];
 
+    @OneToMany(() => Publish, publish => publish.creator)
+    publishs: Publish[];
+
+    @OneToMany(() => Like, like => like.creator)
+    likes: Like[];
     @OneToMany(() => Journey, journey => journey.creator)
     journeys: Journey[];
 
