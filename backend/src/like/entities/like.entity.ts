@@ -12,11 +12,11 @@ export class Like {
 
     @ManyToOne(() => User, user => user.likes, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     @JoinColumn({ name: 'user_id' })
-    user: User;
+    creator: User;
 
     @ManyToOne(() => Post, post => post.likes, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     @JoinColumn({ name: 'post_id' })
-    post: Post;
+    publish: Post;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;

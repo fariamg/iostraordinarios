@@ -8,10 +8,11 @@ import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AuthModule } from 'src/auth/auth.module';
+import { PostModule } from 'src/post/post.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Like]), 
-  AuthModule, UserModule],
+  AuthModule, UserModule, PostModule],
   controllers: [LikeController],
   providers: [
     LikeService,
@@ -21,5 +22,6 @@ import { AuthModule } from 'src/auth/auth.module';
       useClass: RolesGuard,
     },
   ],
+  exports: [LikeService],
 })
 export class LikeModule {}
