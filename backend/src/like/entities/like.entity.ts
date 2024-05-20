@@ -1,15 +1,13 @@
 import { User } from "src/user/entities/user.entity";
 import { Publish } from "src/publish/entities/publish.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Unique } from "typeorm";
 import { LikeFeeling } from "src/@common/enums/like-feeling.enum";
 
 @Entity({ name: 'likes' })
+@Unique(['creator', 'publish'])
 export class Like {
     @PrimaryGeneratedColumn()
     id: number;
-
-    //@Column({ type: 'int', nullable: false, default: 0})
-    //publishId: number;
 
     @Column({ enum: LikeFeeling, type: 'enum', default: LikeFeeling.like })
     type: string;
