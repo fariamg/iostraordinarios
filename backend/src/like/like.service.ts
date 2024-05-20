@@ -47,6 +47,6 @@ export class LikeService {
   }
 
   findOne(id: number): Promise<Like | null> {
-    return this.likeRepository.findOneBy({ id });
+    return this.likeRepository.findOne({ where: { id }, relations: ['creator', 'publish']});
   }
 }
