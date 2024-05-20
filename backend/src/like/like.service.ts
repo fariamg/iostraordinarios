@@ -3,8 +3,8 @@ import { CreateLikeDto } from './dto/create-like.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like } from './entities/like.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { Publish } from 'src/publish/entities/publish.entity';
+import { User } from '../user/entities/user.entity';
+import { Publish } from '../publish/entities/publish.entity';
 
 @Injectable()
 export class LikeService {

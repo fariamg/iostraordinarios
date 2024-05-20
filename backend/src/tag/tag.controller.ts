@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { TagService } from './tag.service';
 import { Tag } from './entities/tag.entity';
-import { Public } from 'src/@common/decorators/public.decorator';
+import { Public } from '../@common/decorators/public.decorator';
 
 @Controller('tags')
 export class TagController {

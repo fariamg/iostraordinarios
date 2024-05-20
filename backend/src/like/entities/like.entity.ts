@@ -1,7 +1,7 @@
-import { User } from "src/user/entities/user.entity";
-import { Publish } from "src/publish/entities/publish.entity";
+import { User } from "../../user/entities/user.entity";
+import { Publish } from "../../publish/entities/publish.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
-import { LikeFeeling } from "src/@common/enums/like-feeling.enum";
+import { LikeFeeling } from "../../@common/enums/like-feeling.enum";
 
 @Entity({ name: 'likes' })
 export class Like {

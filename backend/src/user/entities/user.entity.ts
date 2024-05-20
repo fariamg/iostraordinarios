@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { UserRole } from 'src/@common/enums/user-role.enum';
-import { Publish } from 'src/publish/entities/publish.entity';
-import { Superpower } from 'src/superpower/entities/superpower.entity';
-import { Tag } from 'src/tag/entities/tag.entity';
-import { Journey } from 'src/journey/entities/journey.entity';
+import { UserRole } from '../../@common/enums/user-role.enum';
+import { Publish } from '../../publish/entities/publish.entity';
+import { Superpower } from '../../superpower/entities/superpower.entity';
+import { Tag } from '../../tag/entities/tag.entity';
+import { Journey } from '../../journey/entities/journey.entity';
 import { Exclude } from 'class-transformer';
-import { Like } from 'src/like/entities/like.entity';
+import { Like } from '../../like/entities/like.entity';
 
 @Entity('users')
 export class User {

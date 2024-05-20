@@ -1,5 +1,5 @@
-import { Journey } from "src/journey/entities/journey.entity";
-import { Publish } from "src/publish/entities/publish.entity";
+import { Journey } from "../../journey/entities/journey.entity";
+import { Publish } from "../../publish/entities/publish.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'superpowers' })

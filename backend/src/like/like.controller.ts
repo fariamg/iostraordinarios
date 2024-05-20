@@ -1,11 +1,11 @@
 import { Controller, Get, Body, Req, Param, Delete, UseGuards, Post } from '@nestjs/common';
 import { LikeService } from './like.service';
 import { CreateLikeDto } from './dto/create-like.dto';
-import { UserService } from 'src/user/user.service';
-import { PublishService } from 'src/publish/publish.service';
-import { RequestWithUser } from 'src/@types/express-request.interface';
+import { UserService } from '../user/user.service';
+import { PublishService } from '../publish/publish.service';
+import { RequestWithUser } from '../@types/express-request.interface';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('likes')

@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { SuperpowerService } from './superpower.service';
-import { Public } from 'src/@common/decorators/public.decorator';
+import { Public } from '../@common/decorators/public.decorator';
 
 @Controller('superpowers')
 export class SuperpowerController {
