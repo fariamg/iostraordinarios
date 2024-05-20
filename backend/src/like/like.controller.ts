@@ -39,8 +39,10 @@ export class LikeController {
   }
 
   @ApiBearerAuth('KEY_AUTH')
-  @Delete(':id')
-  removeLike(@Param('id') id: string) {
-    return this.likeService.removeLike(+id);
+  @Delete('/:publishId')  
+  removeLike(@Req() req, @Param('publishId') publishId: string) {
+    const creatorId = req.user.id;
+    return this.likeService.removeLike(+publishId, +creatorId);
   }
 }
+

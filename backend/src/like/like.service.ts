@@ -5,7 +5,8 @@ import { Like } from './entities/like.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Publish } from 'src/publish/entities/publish.entity';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
+
 
 @Injectable()
 export class LikeService {
@@ -37,8 +38,14 @@ export class LikeService {
   }
 }
 
-  async removeLike(id: number): Promise<void> {
-    await this.likeRepository.delete(id);
+  async removeLike(publishId: number, creatorId: number): Promise<void> {
+    const like = await this.likeRepository.findOne({ where: { publish: { id: publishId } , creator: { id: creatorId } } } );
+
+    if (!like) {
+      throw new NotFoundException('Like not found');
+    }
+
+    await this.likeRepository.remove(like);
   }
 
   findAll(): Promise<Like[]> {
