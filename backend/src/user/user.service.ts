@@ -51,7 +51,7 @@ export class UserService {
     }
 
     async findOne(id: number): Promise<User | undefined> {
-        const user = await this.userRepository.findOne({ where: { id }, relations: ['tags', 'superpower'] });
+        const user = await this.userRepository.findOne({ where: { id }, relations: ['tags', 'superpower', 'likes.publish'] });
         if (user) {
             delete user.password;
         }
