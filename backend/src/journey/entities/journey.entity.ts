@@ -33,9 +33,6 @@ export class Journey {
   @JoinTable({ name: 'journeys_superpowers' })
   superpowers: Superpower[];
 
-  @Column({ default: false })
-  completed: boolean;
-
   @Column({ type: 'timestamp', nullable: true })
   completedAt: Date | null;
   

@@ -7,11 +7,7 @@ INSERT INTO superpowers (name) VALUES
    ('O indestrutível laço da evolução'),
    ('As maravilhosas asas para inovar'),
    ('A fabulosa flecha da agilidade');
-          
--- User admin
-INSERT INTO users (full_name, email, password, role) VALUES
-	('admin', 'admin@example.com', 'admin', 'admin');
-
+        
 -- Tags
 INSERT INTO tags (name) VALUES
 	('Transformar'),

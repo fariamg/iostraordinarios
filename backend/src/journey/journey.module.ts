@@ -5,12 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Journey } from './entities/journey.entity';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
+import { JourneyUser } from './entities/journey-user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Journey]),
+    TypeOrmModule.forFeature([Journey, JourneyUser]),
     AuthModule,
-    UserModule
+    UserModule,
   ],
   controllers: [JourneyController],
   providers: [

@@ -9,7 +9,9 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')
 export class UserController {
-    constructor(private readonly userService: UserService) { }
+    constructor(
+        private readonly userService: UserService
+    ) { }
 
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth('KEY_AUTH')
@@ -27,15 +29,21 @@ export class UserController {
     }
 
     @ApiBearerAuth('KEY_AUTH')
-    @Get(':id')
-    async findOneById(@Param('id') id: number): Promise<User> {
-        return this.userService.findOne(id);
+    @Get('ranking')
+    async getRanking(): Promise<User[]> {
+      return this.userService.getRanking();
     }
 
     @ApiBearerAuth('KEY_AUTH')
     @Get('fullName/:fullName')
     async findOne(@Param('fullName') fullName: string): Promise<User> {
         return this.userService.findOneByfullName(fullName);
+    }
+
+    @ApiBearerAuth('KEY_AUTH')
+    @Get(':id')
+    async findOneById(@Param('id') id: number): Promise<User> {
+        return this.userService.findOne(id);
     }
 
     @Public()
@@ -55,5 +63,4 @@ export class UserController {
     async updateSuperpower(@Param('id') id: number, @Body() body: { superpower: string }): Promise<User> {
         return this.userService.updateSuperpower(id, body.superpower);
     }
-
 }

@@ -63,7 +63,11 @@ export class UserService {
     }
 
     async findAll(): Promise<User[]> {
-        return this.userRepository.find();
+        return this.userRepository.find({
+            order: {
+                score: 'DESC',
+            },
+        });
     }
 
     async updateTagsToUser(userId: number, tagNames: string[]): Promise<User> {
@@ -95,5 +99,15 @@ export class UserService {
         user.superpower = superpower;
 
         return this.userRepository.save(user);
+    }
+
+    async getRanking(): Promise<User[]> {
+        const users = await this.userRepository.find({
+            order: {
+                score: 'DESC',
+            },
+        });
+
+        return users;
     }
 }

@@ -4,8 +4,9 @@ import { User } from '../user/entities/user.entity';
 import { Journey } from './entities/journey.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tag } from '../tag/entities/tag.entity';
-import { Superpower } from '../superpower/entities/superpower.entity';
+import { Tag } from 'src/tag/entities/tag.entity';
+import { Superpower } from 'src/superpower/entities/superpower.entity';
+import { JourneyUser } from './entities/journey-user.entity';
 
 @Injectable()
 export class JourneyService {
@@ -18,6 +19,8 @@ export class JourneyService {
     private tagRepository: Repository<Tag>,
     @InjectRepository(Superpower)
     private superpowerRepository: Repository<Superpower>,
+    @InjectRepository(JourneyUser)
+    private journeyUserRepository: Repository<JourneyUser>,
   ) {}
 
   async create(createJourneyDto: CreateJourneyDto, id: number): Promise<Journey> {
@@ -63,20 +66,22 @@ export class JourneyService {
   }
 
   async completeJourney(userId: number, journeyId: number): Promise<void> {
-    const journey = await this.journeyRepository.findOne({ where: { id: journeyId, completed: false }, relations: ['users', 'creator'] });
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+    const journeyUser = await this.journeyUserRepository.findOne({ where: { user: { id: userId }, journey: { id: journeyId } } });
 
-    if (!journey || !user) {
-      throw new NotFoundException('Jornada ou usuário não encontrado');
+    if (!journeyUser) {
+      throw new NotFoundException('Jornada não encontrada para este usuário ou já concluída');
     }
 
-    if (!journey.users.some(u => u.id === userId)) {
-      throw new NotFoundException('Usuário não ingressou nesta jornada');
+    if (journeyUser.completed) {
+      throw new NotFoundException('Jornada já concluída para este usuário');
     }
 
-    journey.completed = true;
-    journey.completedAt = new Date();
-    await this.journeyRepository.save(journey);
+    journeyUser.completed = true;
+    journeyUser.completedAt = new Date();
+    await this.journeyUserRepository.save(journeyUser);
+
+    const user = journeyUser.user;
+    const journey = journeyUser.journey;
 
     user.nuts += journey.nuts;
     user.score += 100;
