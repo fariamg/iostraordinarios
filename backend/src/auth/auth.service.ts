@@ -16,7 +16,10 @@ export class AuthService {
 
     async validateUser(authPayloadDto: AuthPayloadDto) {
         const { email, password } = authPayloadDto;
-        const user = await this.userRepository.findOne({ where: { email } });
+        const user = await this.userRepository.createQueryBuilder("user")
+        .select(["user.id", "user.password"])
+        .where("user.email = :email", { email })
+        .getOne();
 
         if (!user || !(await comparePasswords(password, user.password))) {
             throw new UnauthorizedException();
