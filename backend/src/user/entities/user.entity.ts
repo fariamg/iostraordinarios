@@ -6,6 +6,7 @@ import { Tag } from 'src/tag/entities/tag.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
 import { Exclude } from 'class-transformer';
 import { Like } from 'src/like/entities/like.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 
 @Entity('users')
 export class User {
@@ -76,6 +77,9 @@ export class User {
         inverseJoinColumn: { name: 'publish_id', referencedColumnName: 'id' }
     })
     savedPublishes: Publish[];
+
+    @OneToMany(() => Comment, comment => comment.publish)
+    comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;

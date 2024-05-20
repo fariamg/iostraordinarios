@@ -1,6 +1,7 @@
 import { Like } from "src/like/entities/like.entity";
 import { Superpower } from "src/superpower/entities/superpower.entity";
 import { Tag } from "src/tag/entities/tag.entity";
+import { Comment } from "src/comment/entities/comment.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -35,6 +36,9 @@ export class Publish {
 
   @OneToMany(() => Like, like => like.publish)
   likes: Like[];
+
+  @OneToMany(() => Comment, comment => comment.publish)
+  comments: Comment[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

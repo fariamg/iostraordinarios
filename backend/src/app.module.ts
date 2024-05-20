@@ -12,6 +12,7 @@ import { JwtAuthGuard } from './auth/guards/jwt.guard';
 import { PublishModule } from './publish/publish.module';
 import { LikeModule } from './like/like.module';
 import { LikeSubscriber } from 'src/like/entities/like.subscriber';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { LikeSubscriber } from 'src/like/entities/like.subscriber';
     TagModule,
     JourneyModule,
     LikeModule,
+    CommentModule,
   ],
   providers: [
     {
