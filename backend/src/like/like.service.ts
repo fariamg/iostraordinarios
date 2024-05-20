@@ -37,7 +37,10 @@ export class LikeService {
 }
 
   async removeLike(publishId: number, creatorId: number): Promise<void> {
-    const like = await this.likeRepository.findOne({ where: { publish: { id: publishId } , creator: { id: creatorId } } } );
+    const like = await this.likeRepository.findOne({ where: { 
+      publish: { id: publishId } , 
+      creator: { id: creatorId } }, 
+      relations: ['publish'] } );
 
     if (!like) {
       throw new NotFoundException('Like not found');
