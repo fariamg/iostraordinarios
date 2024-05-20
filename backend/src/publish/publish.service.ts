@@ -53,10 +53,10 @@ export class PublishService {
   }
 
   findAll(): Promise<Publish[]> {
-    return this.publishRepository.find({ relations: ['creator', 'superpowers', 'tags'] });
+    return this.publishRepository.find({ relations: ['creator', 'superpowers', 'tags', 'comments', 'likes'] });
   }
 
   findOne(id: number): Promise<Publish> {
-    return this.publishRepository.findOne({ where: { id } });
+    return this.publishRepository.findOne({ where: { id }, relations: ['creator', 'superpowers', 'tags', 'comments', 'likes'] });
   }
 }
