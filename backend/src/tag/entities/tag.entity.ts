@@ -1,6 +1,6 @@
-import { Journey } from "src/journey/entities/journey.entity";
-import { Publish } from "src/publish/entities/publish.entity";
-import { User } from "src/user/entities/user.entity";
+import { Journey } from "../../journey/entities/journey.entity";
+import { Publish } from "../../publish/entities/publish.entity";
+import { User } from "../../user/entities/user.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tags')

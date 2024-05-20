@@ -3,8 +3,8 @@ import { JourneyService } from './journey.service';
 import { JourneyController } from './journey.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Journey } from './entities/journey.entity';
-import { AuthModule } from 'src/auth/auth.module';
-import { UserModule } from 'src/user/user.module';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [

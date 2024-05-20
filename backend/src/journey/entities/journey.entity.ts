@@ -1,6 +1,6 @@
-import { Superpower } from "src/superpower/entities/superpower.entity";
-import { Tag } from "src/tag/entities/tag.entity";
-import { User } from "src/user/entities/user.entity";
+import { Superpower } from "../../superpower/entities/superpower.entity";
+import { Tag } from "../../tag/entities/tag.entity";
+import { User } from "../../user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'journeys' })

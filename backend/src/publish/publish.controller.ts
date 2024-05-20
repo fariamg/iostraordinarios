@@ -2,7 +2,7 @@ import { Controller, Get, Body, Param, UseGuards, Request, Post } from '@nestjs/
 import { PublishService } from './publish.service';
 import { CreatePublishDto } from './dto/create-publish.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { Publish } from './entities/publish.entity';
 

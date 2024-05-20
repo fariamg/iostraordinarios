@@ -2,9 +2,9 @@ import { Controller, Get, Param, Body, Patch, Post, UseGuards, Req } from '@nest
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { Request } from 'express'; // Importação adicionada
-import { Public } from 'src/@common/decorators/public.decorator';
+import { Public } from '../@common/decorators/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')

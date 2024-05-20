@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { AuthPayloadDto } from './dto/auth.dto';
-import { comparePasswords } from 'src/@utils/hashing.util';
+import { comparePasswords } from '../@utils/hashing.util';
 
 @Injectable()
 export class AuthService {

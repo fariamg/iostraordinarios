@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { PublishService } from './publish.service';
 import { PublishController } from './publish.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { Publish } from './entities/publish.entity';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Publish]), AuthModule, UserModule],

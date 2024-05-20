@@ -3,10 +3,10 @@ import { Controller, Get, Body, Param, UseGuards, Post, Request } from '@nestjs/
 import { JourneyService } from './journey.service';
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { Roles } from 'src/@common/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../@common/decorators/roles.decorator';
 import { UserRole } from '../@common/enums/user-role.enum';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('journeys')

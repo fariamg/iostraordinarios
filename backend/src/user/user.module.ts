@@ -3,11 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { Tag } from 'src/tag/entities/tag.entity';
-import { Publish } from 'src/publish/entities/publish.entity';
-import { Superpower } from 'src/superpower/entities/superpower.entity';
-import { Journey } from 'src/journey/entities/journey.entity';
-import { AuthModule } from 'src/auth/auth.module';
+import { Tag } from '../tag/entities/tag.entity';
+import { Publish } from '../publish/entities/publish.entity';
+import { Superpower } from '../superpower/entities/superpower.entity';
+import { Journey } from '../journey/entities/journey.entity';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [

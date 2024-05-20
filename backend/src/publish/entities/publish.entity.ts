@@ -1,8 +1,8 @@
-import { Like } from "src/like/entities/like.entity";
-import { Superpower } from "src/superpower/entities/superpower.entity";
-import { Tag } from "src/tag/entities/tag.entity";
-import { Comment } from "src/comment/entities/comment.entity";
-import { User } from "src/user/entities/user.entity";
+import { Like } from "../../like/entities/like.entity";
+import { Superpower } from "../../superpower/entities/superpower.entity";
+import { Tag } from "../../tag/entities/tag.entity";
+import { User } from "../../user/entities/user.entity";
+import { Comment } from "../../comment/entities/comment.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'publishes' })
