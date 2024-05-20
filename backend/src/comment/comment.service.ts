@@ -27,6 +27,6 @@ export class CommentService {
   }
 
   findOne(id: number): Promise<Comment> {
-    return this.commentRepository.findOne({ where: { id } });
+    return this.commentRepository.findOne({ where: { id }, relations: ['creator', 'publish']});
   }
 }
