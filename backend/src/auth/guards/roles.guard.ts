@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { ROLES_KEY } from '../../@common/decorators/roles.decorator'
+import { ROLES_KEY } from '../../@common/decorators/roles.decorator';
 import { UserRole } from '../../@common/enums/user-role.enum';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class RolesGuard implements CanActivate {
     }
     try {
       const user = this.jwtService.verify(token);
-      return requiredRoles.some((role) => user.role?.includes(role));
+      return requiredRoles.includes(user.role); // Verifica se a role do usuário está nas requiredRoles
     } catch (error) {
       return false;
     }

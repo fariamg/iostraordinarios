@@ -18,7 +18,7 @@ export class Journey {
   nuts: number;
 
   @ManyToOne(() => User, user => user.journeys, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'creator_id' })
   creator: User;
 
   @ManyToMany(() => User, user => user.journeys)

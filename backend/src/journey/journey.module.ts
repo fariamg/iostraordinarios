@@ -6,6 +6,9 @@ import { Journey } from './entities/journey.entity';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { JourneyUser } from './entities/journey-user.entity';
+import { JwtStrategy } from '../auth/strategies/jwt.strategy';  // Adicione esta importação
+import { RolesGuard } from '../auth/guards/roles.guard';  // Adicione esta importação
+import { APP_GUARD } from '@nestjs/core';  // Adicione esta importação
 
 @Module({
   imports: [
@@ -16,13 +19,12 @@ import { JourneyUser } from './entities/journey-user.entity';
   controllers: [JourneyController],
   providers: [
     JourneyService,
-    // JwtStrategy,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: RolesGuard,
-    // },
+    JwtStrategy,  // Adicione esta linha
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
   exports: [JourneyService],
-
 })
-export class JourneyModule { }
+export class JourneyModule {}

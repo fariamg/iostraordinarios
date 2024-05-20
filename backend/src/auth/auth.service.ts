@@ -17,7 +17,7 @@ export class AuthService {
     async validateUser(authPayloadDto: AuthPayloadDto) {
         const { email, password } = authPayloadDto;
         const user = await this.userRepository.createQueryBuilder("user")
-        .select(["user.id", "user.password"])
+        .select(["user.id", "user.password", "user.role"]) 
         .where("user.email = :email", { email })
         .getOne();
 
@@ -31,7 +31,7 @@ export class AuthService {
 
     async login(authPayloadDto: AuthPayloadDto) {
         const user = await this.validateUser(authPayloadDto);
-        const payload = { email: user.email, sub: user.id, role: user.role };
+        const payload = { email: user.email, sub: user.id, role: user.role }; 
         return {
             access_token: this.jwtService.sign(payload),
         };

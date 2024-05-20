@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Journey } from 'src/journey/entities/journey.entity';
 
@@ -8,11 +8,9 @@ export class JourneyUser {
   id: number;
 
   @ManyToOne(() => User, user => user.journeys)
-  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @ManyToOne(() => Journey, journey => journey.users)
-  @JoinColumn({ name: 'journey_id' })
   journey: Journey;
 
   @Column({ default: false })
