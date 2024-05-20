@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt.guard';
 import { PublishModule } from './publish/publish.module';
 import { LikeModule } from './like/like.module';
+import { LikeSubscriber } from 'src/like/entities/like.subscriber';
 
 @Module({
   imports: [
@@ -18,7 +19,10 @@ import { LikeModule } from './like/like.module';
       isGlobal: true,
       cache: true,
     }),
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRoot({
+      ...dataSourceOptions, 
+      subscribers: [LikeSubscriber] 
+    }),
     AuthModule,
     UserModule,
     SuperpowerModule,

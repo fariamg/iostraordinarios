@@ -8,6 +8,9 @@ export class Like {
     @PrimaryGeneratedColumn()
     id: number;
 
+    //@Column({ type: 'int', nullable: false, default: 0})
+    //publishId: number;
+
     @Column({ enum: LikeFeeling, type: 'enum', default: LikeFeeling.like })
     type: string;
 
