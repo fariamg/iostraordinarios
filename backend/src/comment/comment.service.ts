@@ -14,6 +14,10 @@ export class CommentService {
   ) { }
 
   async create(createCommentDto: CreateCommentDto, creator: User, publish: Publish): Promise<Comment> {
+    if (!creator || !publish) {
+      throw new Error('User or publish not found');
+    }
+    
     const comment = this.commentRepository.create({
       ...createCommentDto,
       creator,

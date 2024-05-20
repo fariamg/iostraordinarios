@@ -19,7 +19,6 @@ export class LikeService {
       throw new Error('User or publish not found');
     }
 
-
     const newLike = this.likeRepository.create({
       ...createLikeDto,
       creator,
