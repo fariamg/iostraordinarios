@@ -49,4 +49,38 @@ export class JourneyService {
   findOne(id: number): Promise<Journey> {
     return this.journeyRepository.findOne({ where: { id } });
   }
+
+  async joinJourney(userId: number, journeyId: number): Promise<void> {
+    const journey = await this.journeyRepository.findOne({ where: { id: journeyId }, relations: ['users'] });
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+
+    if (!journey || !user) {
+      throw new NotFoundException('Jornada ou usuário não encontrado');
+    }
+
+    journey.users.push(user);
+    await this.journeyRepository.save(journey);
+  }
+
+  async completeJourney(userId: number, journeyId: number): Promise<void> {
+    const journey = await this.journeyRepository.findOne({ where: { id: journeyId, completed: false }, relations: ['users', 'creator'] });
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+
+    if (!journey || !user) {
+      throw new NotFoundException('Jornada ou usuário não encontrado');
+    }
+
+    if (!journey.users.some(u => u.id === userId)) {
+      throw new NotFoundException('Usuário não ingressou nesta jornada');
+    }
+
+    journey.completed = true;
+    journey.completedAt = new Date();
+    await this.journeyRepository.save(journey);
+
+    user.nuts += journey.nuts;
+    user.score += 100;
+    user.journeysCompleted += 1;
+    await this.userRepository.save(user);
+  }
 }
