@@ -1,5 +1,4 @@
-
-import { Controller, Get, Body, Param, UseGuards, Post, Request } from '@nestjs/common';
+import { Controller, Get, Body, Param, UseGuards, Post, Request, Patch, ParseIntPipe } from '@nestjs/common';
 import { JourneyService } from './journey.service';
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -44,10 +43,13 @@ export class JourneyController {
     await this.journeyService.joinJourney(userId, journeyId);
   }
 
+  @Patch(':journeyId/complete')
   @ApiBearerAuth('KEY_AUTH')
-  @Post(':id/complete')
-  async completeJourney(@Param('id') journeyId: number, @Request() req) {
+  async completeJourney(
+    @Param('journeyId', ParseIntPipe) journeyId: number,
+    @Request() req
+  ): Promise<void> {
     const userId = req.user.id;
-    await this.journeyService.completeJourney(userId, journeyId);
+    return this.journeyService.completeJourney(userId, journeyId);
   }
 }

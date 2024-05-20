@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { UserRole } from 'src/@common/enums/user-role.enum';
-import { Publish } from 'src/publish/entities/publish.entity';
-import { Superpower } from 'src/superpower/entities/superpower.entity';
-import { Tag } from 'src/tag/entities/tag.entity';
-import { Journey } from 'src/journey/entities/journey.entity';
+import { UserRole } from '../../@common/enums/user-role.enum';
+import { Publish } from '../../publish/entities/publish.entity';
+import { Superpower } from '../../superpower/entities/superpower.entity';
+import { Tag } from '../../tag/entities/tag.entity';
 import { Exclude } from 'class-transformer';
-import { Like } from 'src/like/entities/like.entity';
+import { Like } from '../../like/entities/like.entity';
+import { JourneyUser } from 'src/journey/entities/journeys_users.entity';
 
 @Entity('users')
 export class User {
@@ -60,8 +60,8 @@ export class User {
     @OneToMany(() => Like, like => like.creator)
     likes: Like[];
     
-    @OneToMany(() => Journey, journey => journey.creator)
-    journeys: Journey[];
+    @OneToMany(() => JourneyUser, journeyUser => journeyUser.user)
+    journeys: JourneyUser[];
 
     @OneToMany(() => Publish, publish => publish.creator)
     publishes: Publish[];

@@ -6,6 +6,7 @@ import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { Superpower } from 'src/superpower/entities/superpower.entity';
+import { JourneyUser } from './entities/journeys_users.entity';
 
 @Injectable()
 export class JourneyService {
@@ -18,6 +19,8 @@ export class JourneyService {
     private tagRepository: Repository<Tag>,
     @InjectRepository(Superpower)
     private superpowerRepository: Repository<Superpower>,
+    @InjectRepository(JourneyUser)
+    private journeyUserRepository: Repository<JourneyUser>,
   ) {}
 
   async create(createJourneyDto: CreateJourneyDto, id: number): Promise<Journey> {
@@ -51,36 +54,36 @@ export class JourneyService {
   }
 
   async joinJourney(userId: number, journeyId: number): Promise<void> {
-    const journey = await this.journeyRepository.findOne({ where: { id: journeyId }, relations: ['users'] });
+    const journey = await this.journeyRepository.findOne({ where: { id: journeyId } });
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (!journey || !user) {
-      throw new NotFoundException('Jornada ou usuário não encontrado');
+      throw new NotFoundException('Journey or user not found');
     }
 
-    journey.users.push(user);
-    await this.journeyRepository.save(journey);
+    const journeyUser = this.journeyUserRepository.create({ user, journey });
+    await this.journeyUserRepository.save(journeyUser);
   }
 
   async completeJourney(userId: number, journeyId: number): Promise<void> {
-    const journey = await this.journeyRepository.findOne({ where: { id: journeyId, completed: false }, relations: ['users', 'creator'] });
+    const journeyUser = await this.journeyUserRepository.findOne({ where: { user: { id: userId }, journey: { id: journeyId } } });
+    
+    if (!journeyUser) {
+      throw new NotFoundException('Journey participation not found.');
+    }
+
+    journeyUser.completed = true;
+    journeyUser.completedAt = new Date();
+
+    await this.journeyUserRepository.save(journeyUser);
+
     const user = await this.userRepository.findOne({ where: { id: userId } });
+    const journey = await this.journeyRepository.findOne({ where: { id: journeyId } });
 
-    if (!journey || !user) {
-      throw new NotFoundException('Jornada ou usuário não encontrado');
-    }
-
-    if (!journey.users.some(u => u.id === userId)) {
-      throw new NotFoundException('Usuário não ingressou nesta jornada');
-    }
-
-    journey.completed = true;
-    journey.completedAt = new Date();
-    await this.journeyRepository.save(journey);
-
-    user.nuts += journey.nuts;
     user.score += 100;
+    user.nuts += journey.nuts;
     user.journeysCompleted += 1;
+
     await this.userRepository.save(user);
   }
 }

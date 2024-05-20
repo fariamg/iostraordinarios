@@ -1,7 +1,8 @@
-import { Superpower } from "src/superpower/entities/superpower.entity";
-import { Tag } from "src/tag/entities/tag.entity";
-import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Superpower } from "../../superpower/entities/superpower.entity";
+import { Tag } from "../../tag/entities/tag.entity";
+import { User } from "../../user/entities/user.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { JourneyUser } from "./journeys_users.entity";
 
 @Entity({ name: 'journeys' })
 export class Journey {
@@ -21,9 +22,8 @@ export class Journey {
   @JoinColumn({ name: 'user_id' })
   creator: User;
 
-  @ManyToMany(() => User, user => user.journeys)
-  @JoinTable({ name: 'journeys_users' })
-  users: User[];
+  @OneToMany(() => JourneyUser, journeyUser => journeyUser.journey)
+  users: JourneyUser[];
 
   @ManyToMany(() => Tag, tag => tag.journeys) 
   @JoinTable({ name: 'journeys_tags' })
@@ -32,12 +32,6 @@ export class Journey {
   @ManyToMany(() => Superpower, Superpower => Superpower.journeys) 
   @JoinTable({ name: 'journeys_superpowers' })
   superpowers: Superpower[];
-
-  @Column({ default: false })
-  completed: boolean;
-
-  @Column({ type: 'timestamp', nullable: true })
-  completedAt: Date | null;
   
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
