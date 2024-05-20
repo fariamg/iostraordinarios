@@ -32,6 +32,12 @@ export class Journey {
   @ManyToMany(() => Superpower, Superpower => Superpower.journeys) 
   @JoinTable({ name: 'journeys_superpowers' })
   superpowers: Superpower[];
+
+  @Column({ default: false })
+  completed: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  completedAt: Date | null;
   
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

@@ -36,4 +36,18 @@ export class JourneyController {
   findOne(@Param('id') id: string) {
     return this.journeyService.findOne(+id);
   }
+
+  @ApiBearerAuth('KEY_AUTH')
+  @Post(':id/join')
+  async joinJourney(@Param('id') journeyId: number, @Request() req) {
+    const userId = req.user.id;
+    await this.journeyService.joinJourney(userId, journeyId);
+  }
+
+  @ApiBearerAuth('KEY_AUTH')
+  @Post(':id/complete')
+  async completeJourney(@Param('id') journeyId: number, @Request() req) {
+    const userId = req.user.id;
+    await this.journeyService.completeJourney(userId, journeyId);
+  }
 }
