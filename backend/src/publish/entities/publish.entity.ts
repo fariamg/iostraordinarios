@@ -16,7 +16,7 @@ export class Publish {
   @Column({ length: 500, nullable: false })
   description: string;
 
-  @Column({ nullable: false, type: 'int', default: 0 })
+  @Column({ name: 'likes_count', nullable: false, type: 'int', default: 0 })
   likesCount: number;
 
   @ManyToOne(() => User, user => user.publishes, { nullable: false, onDelete: 'CASCADE' })
