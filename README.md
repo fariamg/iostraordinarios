@@ -1,10 +1,10 @@
 # Journey
 
-![Journey]( )
 
 
 
-` Projeto: Desenvolvimento de uma Aplicação Móvel em um Ambiente de Negócio
+
+ Projeto: Aplicativo que gera jornada gamificada para continuação dos super-poderes. 
 
 `Equipe` Iostraordinários - CAMP Ioasys - 2024
 
