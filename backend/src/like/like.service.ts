@@ -5,12 +5,14 @@ import { Like } from './entities/like.entity';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Publish } from '../publish/entities/publish.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class LikeService {
   constructor(
     @InjectRepository(Like)
-    private likeRepository: Repository<Like>
+    private likeRepository: Repository<Like>,
+    private readonly userService: UserService
   ) {}
 
   async create(createLikeDto: CreateLikeDto, creator: User, publish: Publish): Promise<Like> {
@@ -25,16 +27,17 @@ export class LikeService {
     });
 
     try {
-      return await this.likeRepository.save(newLike);
-    }
-    catch (error) { 
-      if (error.code === '23505') { 
+      const savedLike = await this.likeRepository.save(newLike);
+      await this.userService.incrementScoreAndInteractions(creator.id);
+      return savedLike;
+    } catch (error) {
+      if (error.code === '23505') {
         throw new BadRequestException('User has already liked this post');
       } else {
         throw error;
       }
+    }
   }
-}
 
   async removeLike(publishId: number, creatorId: number): Promise<void> {
     const like = await this.likeRepository.findOne({ where: { 

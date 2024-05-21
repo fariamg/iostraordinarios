@@ -1,6 +1,6 @@
 import { EventSubscriber, EntitySubscriberInterface, InsertEvent, Repository, RemoveEvent} from 'typeorm'
 import { Like } from './like.entity';
-import { Publish } from 'src/publish/entities/publish.entity';
+import { Publish } from '../../publish/entities/publish.entity';
 
 @EventSubscriber()
 export class LikeSubscriber implements EntitySubscriberInterface<Like> {
