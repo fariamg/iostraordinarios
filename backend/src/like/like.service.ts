@@ -6,7 +6,6 @@ import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Publish } from '../publish/entities/publish.entity';
 import { UserService } from '../user/user.service';
-import { UserResponseDto } from 'src/user/dto/user-response.dto';
 import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
