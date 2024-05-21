@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like } from './entities/like.entity';
@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Publish } from '../publish/entities/publish.entity';
 import { UserService } from '../user/user.service';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class LikeService {
@@ -19,23 +20,31 @@ export class LikeService {
     if (!creator || !publish) {
       throw new Error('User or publish not found');
     }
-
+  
+    const existingLike = await this.likeRepository.findOne({ 
+      where: { 
+          creator: { id: creator.id }, 
+          publish: { id: publish.id } 
+      } 
+  });
+    if (existingLike) {
+      throw new BadRequestException('User has already liked this post');
+    }
+  
     const newLike = this.likeRepository.create({
       ...createLikeDto,
       creator,
       publish,
     });
-
+  
     try {
-      const savedLike = await this.likeRepository.save(newLike);
-      await this.userService.incrementScoreAndInteractions(creator.id);
-      return savedLike;
-    } catch (error) {
-      if (error.code === '23505') {
+      return await this.likeRepository.save(newLike);
+    }
+    catch (error) { 
+      if (error.code === '23505') { 
         throw new BadRequestException('User has already liked this post');
-      } else {
-        throw error;
       }
+      throw error;
     }
   }
 

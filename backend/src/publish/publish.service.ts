@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 import { Tag } from '../tag/entities/tag.entity';
 import { Superpower } from '../superpower/entities/superpower.entity';
+import { UserResponseDto } from '../user/dto/user-response.dto'; // Importe o DTO aqui
 
 @Injectable()
 export class PublishService {
@@ -20,7 +21,7 @@ export class PublishService {
     private superpowerRepository: Repository<Superpower>,
   ) {}
 
-  async create(createPublishDto: CreatePublishDto, userId: number): Promise<Publish> {
+  async create(createPublishDto: CreatePublishDto, userId: number): Promise<any> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (!user) {
@@ -49,12 +50,23 @@ export class PublishService {
       superpowers,
     });
 
-    const savedPublish = await this.publishRepository.save(publish);
+    await this.publishRepository.save(publish);
 
-    user.publishesCount += 1;
-    await this.userRepository.save(user);
+    const userResponse: UserResponseDto = {
+      id: user.id,
+      fullName: user.fullName,
+      position: user.position,
+      superpower: user.superpower,
+    };
 
-    return savedPublish;
+    return {
+      ...publish,
+      creator: userResponse,
+    };
+  }
+
+  findAll(): Promise<Publish[]> {
+    return this.publishRepository.find({ relations: ['creator', 'superpowers', 'tags'] });
   }
 
   async findAllByLikes(): Promise<Publish[]> {
@@ -65,11 +77,7 @@ export class PublishService {
       .getMany();
   }
 
-  findAll(): Promise<Publish[]> {
-    return this.publishRepository.find({ relations: ['creator', 'superpowers', 'tags', 'comments', 'likes'] });
-  }
-
   findOne(id: number): Promise<Publish> {
-    return this.publishRepository.findOne({ where: { id }, relations: ['creator', 'superpowers', 'tags', 'comments', 'likes'] });
+    return this.publishRepository.findOne({ where: { id } });
   }
 }
