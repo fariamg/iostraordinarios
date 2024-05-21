@@ -3,10 +3,9 @@ import { UserRole } from '../../@common/enums/user-role.enum';
 import { Publish } from '../../publish/entities/publish.entity';
 import { Superpower } from '../../superpower/entities/superpower.entity';
 import { Tag } from '../../tag/entities/tag.entity';
-import { Journey } from '../../journey/entities/journey.entity';
 import { Exclude } from 'class-transformer';
 import { Like } from '../../like/entities/like.entity';
-import { Comment } from '../../comment/entities/comment.entity';
+import { JourneyUser } from '../../journey/entities/journey-user.entity';
 
 @Entity('users')
 export class User {
@@ -16,7 +15,7 @@ export class User {
     @Column({ name: 'full_name', nullable: false })
     fullName: string;
 
-    @Column({ name: 'password', nullable: false, select: false})
+    @Column({ name: 'password', nullable: false })
     @Exclude()
     password: string;
 
@@ -61,8 +60,8 @@ export class User {
     @OneToMany(() => Like, like => like.creator)
     likes: Like[];
     
-    @OneToMany(() => Journey, journey => journey.creator)
-    journeys: Journey[];
+    @OneToMany(() => JourneyUser, journeyUser => journeyUser.user)
+    journeys: JourneyUser[];
 
     @OneToMany(() => Publish, publish => publish.creator)
     publishes: Publish[];
@@ -78,8 +77,8 @@ export class User {
     })
     savedPublishes: Publish[];
 
-    @OneToMany(() => Comment, comment => comment.publish)
-    comments: Comment[];
+    // @OneToMany(() => Comment, comment => comment.creator)
+    // comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;

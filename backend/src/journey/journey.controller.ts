@@ -1,12 +1,11 @@
-
-import { Controller, Get, Body, Param, UseGuards, Post, Request } from '@nestjs/common';
+import { Controller, Get, Body, Param, UseGuards, Post, Request, Patch, ParseIntPipe } from '@nestjs/common';
 import { JourneyService } from './journey.service';
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../@common/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from 'src/@common/decorators/roles.decorator';
 import { UserRole } from '../@common/enums/user-role.enum';
-import { UserService } from '../user/user.service';
+import { UserService } from 'src/user/user.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('journeys')
@@ -44,10 +43,13 @@ export class JourneyController {
     await this.journeyService.joinJourney(userId, journeyId);
   }
 
+  @Patch(':journeyId/complete')
   @ApiBearerAuth('KEY_AUTH')
-  @Post(':id/complete')
-  async completeJourney(@Param('id') journeyId: number, @Request() req) {
+  async completeJourney(
+    @Param('journeyId', ParseIntPipe) journeyId: number,
+    @Request() req
+  ): Promise<void> {
     const userId = req.user.id;
-    await this.journeyService.completeJourney(userId, journeyId);
+    return this.journeyService.completeJourney(userId, journeyId);
   }
 }

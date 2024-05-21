@@ -1,21 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { Journey } from 'src/journey/entities/journey.entity';
+import { Entity, ManyToOne, PrimaryColumn, Column, JoinColumn } from 'typeorm';
+import { Journey } from './journey.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity('journeys_users')
 export class JourneyUser {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  journeysId: number;
 
-  @ManyToOne(() => User, user => user.journeys)
-  user: User;
+  @PrimaryColumn()
+  UsersID: number;
 
   @ManyToOne(() => Journey, journey => journey.users)
+  @JoinColumn({ name: 'journeysId' })
   journey: Journey;
+
+  @ManyToOne(() => User, user => user.journeys)
+  @JoinColumn({ name: 'UsersID' })
+  user: User;
 
   @Column({ default: false })
   completed: boolean;
 
-  @Column({ type: 'timestamp', nullable: true })
-  completedAt: Date | null;
+  @Column({ nullable: true })
+  completedAt: Date;
 }
