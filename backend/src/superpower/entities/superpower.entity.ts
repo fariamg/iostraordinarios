@@ -11,7 +11,7 @@ export class Superpower {
   @Column({ length: 500, nullable: false })
   name: string;
 
-  @Column({ default: 0})
+  @Column({ name: 'totalScore', default: 0, nullable: false })
   totalScore: number;
 
   @ManyToMany(() => Publish, publish => publish.superpowers)
