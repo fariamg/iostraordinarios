@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Superpower } from "src/superpower/entities/superpower.entity";
+import { Superpower } from "../../superpower/entities/superpower.entity";
 
 export class UserResponseDto {
     @ApiProperty()

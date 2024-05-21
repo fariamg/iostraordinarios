@@ -3,10 +3,10 @@ import { CreatePublishDto } from './dto/create-publish.dto';
 import { Publish } from './entities/publish.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { Tag } from 'src/tag/entities/tag.entity';
-import { Superpower } from 'src/superpower/entities/superpower.entity';
-import { UserResponseDto } from 'src/user/dto/user-response.dto'; // Importe o DTO aqui
+import { User } from '../user/entities/user.entity';
+import { Tag } from '../tag/entities/tag.entity';
+import { Superpower } from '../superpower/entities/superpower.entity';
+import { UserResponseDto } from '../user/dto/user-response.dto'; // Importe o DTO aqui
 
 @Injectable()
 export class PublishService {
