@@ -49,7 +49,12 @@ export class PublishService {
       superpowers,
     });
 
-    return this.publishRepository.save(publish);
+    const savedPublish = await this.publishRepository.save(publish);
+
+    user.publishesCount += 1;
+    await this.userRepository.save(user);
+
+    return savedPublish;
   }
 
   findAll(): Promise<Publish[]> {
