@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like } from './entities/like.entity';
@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Publish } from '../publish/entities/publish.entity';
 import { UserService } from '../user/user.service';
+import { UserResponseDto } from 'src/user/dto/user-response.dto';
 
 @Injectable()
 export class LikeService {
@@ -15,28 +16,32 @@ export class LikeService {
     private readonly userService: UserService
   ) {}
 
-  async create(createLikeDto: CreateLikeDto, creator: User, publish: Publish): Promise<Like> {
+  async create(createLikeDto: CreateLikeDto, creator: User, publish: Publish): Promise<any> {
     if (!creator || !publish) {
       throw new Error('User or publish not found');
     }
 
-    const newLike = this.likeRepository.create({
+    const like = this.likeRepository.create({
       ...createLikeDto,
       creator,
       publish,
     });
 
-    try {
-      const savedLike = await this.likeRepository.save(newLike);
-      await this.userService.incrementScoreAndInteractions(creator.id);
-      return savedLike;
-    } catch (error) {
-      if (error.code === '23505') {
-        throw new BadRequestException('User has already liked this post');
-      } else {
-        throw error;
-      }
-    }
+    const savedLike = await this.likeRepository.save(like);
+
+    await this.userService.incrementScoreAndInteractions(creator.id);
+
+    const userResponse: UserResponseDto = {
+      id: creator.id,
+      fullName: creator.fullName,
+      position: creator.position,
+      superpower: creator.superpower,
+    };
+
+    return {
+      ...savedLike,
+      creator: userResponse, 
+    };
   }
 
   async removeLike(publishId: number, creatorId: number): Promise<void> {

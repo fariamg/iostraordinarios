@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateJourneyDto } from './dto/create-journey.dto';
-import { User } from '../user/entities/user.entity';
+import { User } from 'src/user/entities/user.entity';
 import { Journey } from './entities/journey.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tag } from '../tag/entities/tag.entity';
-import { Superpower } from '../superpower/entities/superpower.entity';
+import { Tag } from 'src/tag/entities/tag.entity';
+import { Superpower } from 'src/superpower/entities/superpower.entity';
+import { UserResponseDto } from 'src/user/dto/user-response.dto';
 import { JourneyUser } from './entities/journey-user.entity';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class JourneyService {
     private journeyUserRepository: Repository<JourneyUser>,
   ) {}
 
-  async create(createJourneyDto: CreateJourneyDto, id: number): Promise<Journey> {
+  async create(createJourneyDto: CreateJourneyDto, id: number): Promise<any> {
     const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
@@ -42,9 +43,21 @@ export class JourneyService {
       superpowers,
     });
 
-    return this.journeyRepository.save(journey);
+    await this.journeyRepository.save(journey);
+
+    const userResponse: UserResponseDto = {
+      id: user.id,
+      fullName: user.fullName,
+      position: user.position,
+      superpower: user.superpower,
+    };
+
+    return {
+      ...journey,
+      creator: userResponse,
+    };
   }
- 
+
   findAll(): Promise<Journey[]> {
     return this.journeyRepository.find({ relations: ['creator', 'superpowers', 'tags'] });
   }
