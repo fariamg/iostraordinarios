@@ -1,9 +1,20 @@
-import { Like } from "../../like/entities/like.entity";
-import { Superpower } from "../../superpower/entities/superpower.entity";
-import { Tag } from "../../tag/entities/tag.entity";
-import { User } from "../../user/entities/user.entity";
-import { Comment } from "../../comment/entities/comment.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Like } from '../../like/entities/like.entity';
+import { Superpower } from '../../superpower/entities/superpower.entity';
+import { Tag } from '../../tag/entities/tag.entity';
+import { User } from '../../user/entities/user.entity';
+import { Comment } from '../../comment/entities/comment.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'publishes' })
 export class Publish {
@@ -19,30 +30,33 @@ export class Publish {
   @Column({ name: 'likes_count', nullable: false, type: 'int', default: 0 })
   likesCount: number;
 
-  @ManyToOne(() => User, user => user.publishes, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.publishes, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'creator_id' })
   creator: User;
 
-  @ManyToMany(() => User, user => user.savedPublishes)
+  @ManyToMany(() => User, (user) => user.savedPublishes)
   savedBy: User[];
 
-  @ManyToMany(() => Tag, tag => tag.publishes)
+  @ManyToMany(() => Tag, (tag) => tag.publishes)
   @JoinTable({ name: 'publishes_tags' })
   tags: Tag[];
 
-  @ManyToMany(() => Superpower, superpower => superpower.publishes)
+  @ManyToMany(() => Superpower, (superpower) => superpower.publishes)
   @JoinTable({ name: 'publishes_superpowers' })
   superpowers: Superpower[];
 
-  @OneToMany(() => Like, like => like.publish)
+  @OneToMany(() => Like, (like) => like.publish)
   likes: Like[];
 
-  @OneToMany(() => Comment, comment => comment.publish)
+  @OneToMany(() => Comment, (comment) => comment.publish)
   comments: Comment[];
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: string;
+  created_at: string;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: string;
+  updated_at: string;
 }
