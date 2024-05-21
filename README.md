@@ -3,6 +3,7 @@
 
 
 
+![journey](https://github.com/daviferreiradev/ioasys-journey/blob/main/img/ioasys.png)
 
  Projeto: Aplicativo que gera jornada gamificada para continuação dos super-poderes. 
 
