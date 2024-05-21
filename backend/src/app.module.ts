@@ -13,6 +13,8 @@ import { PublishModule } from './publish/publish.module';
 import { LikeModule } from './like/like.module';
 import { LikeSubscriber } from './like/entities/like.subscriber';
 import { CommentModule } from './comment/comment.module';
+import { UserSubscriber } from './user/entities/user.subscriber';
+
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { CommentModule } from './comment/comment.module';
     }),
     TypeOrmModule.forRoot({
       ...dataSourceOptions, 
-      subscribers: [LikeSubscriber] 
+      subscribers: [LikeSubscriber, UserSubscriber] 
     }),
     AuthModule,
     UserModule,
