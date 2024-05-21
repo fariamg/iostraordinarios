@@ -7,6 +7,7 @@ import { User } from '../user/entities/user.entity';
 import { Publish } from '../publish/entities/publish.entity';
 import { UserService } from '../user/user.service';
 import { UserResponseDto } from 'src/user/dto/user-response.dto';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class LikeService {
@@ -16,32 +17,36 @@ export class LikeService {
     private readonly userService: UserService
   ) {}
 
-  async create(createLikeDto: CreateLikeDto, creator: User, publish: Publish): Promise<any> {
+  async create(createLikeDto: CreateLikeDto, creator: User, publish: Publish): Promise<Like> {
     if (!creator || !publish) {
       throw new Error('User or publish not found');
     }
-
-    const like = this.likeRepository.create({
+  
+    const existingLike = await this.likeRepository.findOne({ 
+      where: { 
+          creator: { id: creator.id }, 
+          publish: { id: publish.id } 
+      } 
+  });
+    if (existingLike) {
+      throw new BadRequestException('User has already liked this post');
+    }
+  
+    const newLike = this.likeRepository.create({
       ...createLikeDto,
       creator,
       publish,
     });
-
-    const savedLike = await this.likeRepository.save(like);
-
-    await this.userService.incrementScoreAndInteractions(creator.id);
-
-    const userResponse: UserResponseDto = {
-      id: creator.id,
-      fullName: creator.fullName,
-      position: creator.position,
-      superpower: creator.superpower,
-    };
-
-    return {
-      ...savedLike,
-      creator: userResponse, 
-    };
+  
+    try {
+      return await this.likeRepository.save(newLike);
+    }
+    catch (error) { 
+      if (error.code === '23505') { 
+        throw new BadRequestException('User has already liked this post');
+      }
+      throw error;
+    }
   }
 
   async removeLike(publishId: number, creatorId: number): Promise<void> {
