@@ -6,6 +6,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { Request } from 'express'; // Importação adicionada
 import { Public } from '../@common/decorators/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -50,6 +51,12 @@ export class UserController {
     @Post()
     async create(@Body() createUserDto: CreateUserDto): Promise<User> {
         return this.userService.createUser(createUserDto);
+    }
+
+    @ApiBearerAuth('KEY_AUTH')
+    @Patch(':id')
+    async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
+        return this.userService.updateUser(id, updateUserDto);
     }
 
     @ApiBearerAuth('KEY_AUTH')

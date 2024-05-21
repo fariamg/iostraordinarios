@@ -6,6 +6,7 @@ import { Tag } from '../../tag/entities/tag.entity';
 import { Exclude } from 'class-transformer';
 import { Like } from '../../like/entities/like.entity';
 import { JourneyUser } from '../../journey/entities/journey-user.entity';
+import { Comment } from '../../comment/entities/comment.entity';
 
 @Entity('users')
 export class User {
@@ -77,8 +78,8 @@ export class User {
     })
     savedPublishes: Publish[];
 
-    // @OneToMany(() => Comment, comment => comment.creator)
-    // comments: Comment[];
+    @OneToMany(() => Comment, comment => comment.creator)
+    comments: Comment[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
