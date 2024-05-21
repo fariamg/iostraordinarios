@@ -1,8 +1,19 @@
-import { Superpower } from "../../superpower/entities/superpower.entity";
-import { Tag } from "../../tag/entities/tag.entity";
-import { User } from "../../user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { JourneyUser } from "./journey-user.entity";
+import { Superpower } from '../../superpower/entities/superpower.entity';
+import { Tag } from '../../tag/entities/tag.entity';
+import { User } from '../../user/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { JourneyUser } from './journey-user.entity';
 
 @Entity({ name: 'journeys' })
 export class Journey {
@@ -15,27 +26,30 @@ export class Journey {
   @Column({ length: 500, nullable: false })
   description: string;
 
-  @Column({ type: 'int', nullable: false, default: 0})
+  @Column({ type: 'int', nullable: false, default: 0 })
   nuts: number;
 
-  @ManyToOne(() => User, user => user.journeys, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.journeys, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   creator: User;
 
-  @OneToMany(() => JourneyUser, journeyUser => journeyUser.journey)
+  @OneToMany(() => JourneyUser, (journeyUser) => journeyUser.journey)
   users: JourneyUser[];
 
-  @ManyToMany(() => Tag, tag => tag.journeys) 
+  @ManyToMany(() => Tag, (tag) => tag.journeys)
   @JoinTable({ name: 'journeys_tags' })
   tags: Tag[];
 
-  @ManyToMany(() => Superpower, Superpower => Superpower.journeys) 
+  @ManyToMany(() => Superpower, (Superpower) => Superpower.journeys)
   @JoinTable({ name: 'journeys_superpowers' })
   superpowers: Superpower[];
-  
+
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: string;
+  created_at: string;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: string;
+  updated_at: string;
 }

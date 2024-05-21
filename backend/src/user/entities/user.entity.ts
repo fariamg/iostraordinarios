@@ -1,4 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+  ManyToOne,
+} from 'typeorm';
 import { UserRole } from '../../@common/enums/user-role.enum';
 import { Publish } from '../../publish/entities/publish.entity';
 import { Superpower } from '../../superpower/entities/superpower.entity';
@@ -10,80 +20,89 @@ import { Comment } from '../../comment/entities/comment.entity';
 
 @Entity('users')
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ name: 'full_name', nullable: false })
-    fullName: string;
+  @Column({ name: 'full_name', nullable: false })
+  fullName: string;
 
-    @Column({ name: 'password', nullable: false })
-    @Exclude()
-    password: string;
+  @Column({ name: 'password', nullable: false })
+  @Exclude()
+  password: string;
 
-    @Column({ name: 'email', unique: true, nullable: false })
-    email: string;
+  @Column({ name: 'email', unique: true, nullable: false })
+  email: string;
 
-    @Column({ name: 'position', nullable: false })
-    position: string;
+  @Column({ name: 'position', nullable: false })
+  position: string;
 
-    @Column({ type: 'enum', enum: UserRole, nullable: false, default: UserRole.USER })
-    role: UserRole;
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    nullable: false,
+    default: UserRole.USER,
+  })
+  role: UserRole;
 
-    @ManyToOne(() => Superpower, { eager: true })
-    superpower: Superpower;
+  @ManyToOne(() => Superpower, { eager: true })
+  superpower: Superpower;
 
-    @Column({ name: 'nuts', nullable: false, default: 0 })
-    nuts: number;
+  @Column({ name: 'nuts', nullable: false, default: 0 })
+  nuts: number;
 
-    @Column({ name: 'bio', type: 'text', default: 'Olá, estou usando o app Ioasys Journey'})
-    bio: string;
+  @Column({
+    name: 'bio',
+    type: 'text',
+    default: 'Olá, estou usando o app Ioasys Journey',
+  })
+  bio: string;
 
-    @Column({ name: 'avatar', nullable: true })
-    avatar: string;
+  @Column({ name: 'avatar', nullable: true })
+  avatar: string;
 
-    @Column({ name: 'interactions_count', nullable: false, default: 0 })
-    interactionsCount: number;
+  @Column({ name: 'interactions_count', nullable: false, default: 0 })
+  interactionsCount: number;
 
-    @Column({ name: 'missions_completed', nullable: false, default: 0 })
-    journeysCompleted: number;
+  @Column({ name: 'missions_completed', nullable: false, default: 0 })
+  journeysCompleted: number;
 
-    @Column({ name: 'score', nullable: false, default: 0 })
-    score: number;
+  @Column({ name: 'score', nullable: false, default: 0 })
+  score: number;
 
-    @ManyToMany(() => Tag, tag => tag.users, { eager: true })
-    @JoinTable({
-        name: 'users_tags',
-        joinColumn: { name: 'user_id', referencedColumnName: 'id' },
-        inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' }
-    })
-    tags: Tag[];
+  @ManyToMany(() => Tag, (tag) => tag.users, { eager: true })
+  @JoinTable({
+    name: 'users_tags',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
+  })
+  tags: Tag[];
 
-    @OneToMany(() => Like, like => like.creator)
-    likes: Like[];
-    
-    @OneToMany(() => JourneyUser, journeyUser => journeyUser.user)
-    journeys: JourneyUser[];
+  @OneToMany(() => Like, (like) => like.creator)
+  likes: Like[];
 
-    @OneToMany(() => Publish, publish => publish.creator)
-    publishes: Publish[];
+  @OneToMany(() => JourneyUser, (journeyUser) => journeyUser.user)
+  journeys: JourneyUser[];
 
-    @Column({ name: 'publishes_count', nullable: false, default: 0 })
-    publishesCount: number;
+  @OneToMany(() => Publish, (publish) => publish.creator)
+  publishes: Publish[];
 
-    @ManyToMany(() => Publish, publish => publish.savedBy, { eager: true })
-    @JoinTable({
-        name: 'saved_publishes',
-        joinColumn: { name: 'user_id', referencedColumnName: 'id' },
-        inverseJoinColumn: { name: 'publish_id', referencedColumnName: 'id' }
-    })
-    savedPublishes: Publish[];
+  @Column({ name: 'publishes_count', nullable: false, default: 0 })
+  publishesCount: number;
 
-    @OneToMany(() => Comment, comment => comment.creator)
-    comments: Comment[];
+  @ManyToMany(() => Publish, (publish) => publish.savedBy, { eager: true })
+  @JoinTable({
+    name: 'saved_publishes',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'publish_id', referencedColumnName: 'id' },
+  })
+  savedPublishes: Publish[];
 
-    @CreateDateColumn({ name: 'created_at' })
-    createdAt: string;
+  @OneToMany(() => Comment, (comment) => comment.creator)
+  comments: Comment[];
 
-    @UpdateDateColumn({ name: 'updated_at' })
-    updatedAt: string;
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: string;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: string;
 }
