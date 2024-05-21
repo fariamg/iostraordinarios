@@ -11,7 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt.guard';
 import { PublishModule } from './publish/publish.module';
 import { LikeModule } from './like/like.module';
-import { LikeSubscriber } from 'src/like/entities/like.subscriber';
+import { LikeSubscriber } from './like/entities/like.subscriber';
 import { CommentModule } from './comment/comment.module';
 
 @Module({

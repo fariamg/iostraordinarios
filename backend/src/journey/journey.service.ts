@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateJourneyDto } from './dto/create-journey.dto';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { Journey } from './entities/journey.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tag } from 'src/tag/entities/tag.entity';
-import { Superpower } from 'src/superpower/entities/superpower.entity';
+import { Tag } from '../tag/entities/tag.entity';
+import { Superpower } from '../superpower/entities/superpower.entity';
 import { JourneyUser } from './entities/journey-user.entity';
 
 @Injectable()
