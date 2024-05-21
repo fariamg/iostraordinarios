@@ -6,7 +6,7 @@
 
 ` Projeto: Desenvolvimento de uma Aplicação Móvel em um Ambiente de Negócio
 
-`Equipe` Iostraordinários - cAMP Ioasys - 2024
+`Equipe` Iostraordinários - CAMP Ioasys - 2024
 
 Aplicativo que gera jornada gamificada para continuação dos super-poderes. 
 
