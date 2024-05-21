@@ -24,4 +24,6 @@ Aplicativo que gera jornada gamificada para continuação dos super-poderes.
 # Documentação
 
 <ol>
-<li><a href="[docs/01-Documentação de Contexto.md](https://github.com/daviferreiradev/ioasys-journey/blob/main/Links%20documenta%C3%A7%C3%A3o/.gitkeep)"> Links uteis</a></li>
+<li><a href="https://github.com/daviferreiradev/ioasys-journey/blob/main/docs/01-Documentação%20de%20Contexto.md">Links uteis</a></li>
+</ol>
+
