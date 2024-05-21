@@ -12,11 +12,13 @@ Aplicativo que gera jornada gamificada para continuação dos super-poderes.
 
 ## Integrantes
 
-* 
-* 
-* 
-* 
+* Ana Caroline Rosa
+* Davi Ferreira
+* Gabriel Faria
+* Kaique Santos
+* Leonardo Brandão
 * Pryscila Martins Cazuza
+* Wanessa Dias
 
 #
 
