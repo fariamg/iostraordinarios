@@ -3,6 +3,7 @@ import { Superpower } from './entities/superpower.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
+
 @Injectable()
 export class SuperpowerService {
   constructor(
@@ -16,5 +17,14 @@ export class SuperpowerService {
 
   findOne(id: number): Promise<Superpower> {
     return this.superpowerRepository.findOne({ where: { id } });
+  }
+
+  async getRankingSuperpower(): Promise<Superpower[]> {
+    const superpowers = await this.superpowerRepository.find({
+        order: {
+            totalScore: 'DESC',
+        }
+    });
+    return superpowers;
   }
 }
