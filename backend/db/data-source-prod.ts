@@ -11,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
     database: env().database.database,
     entities: ['dist/**/*.entity.js'],
     migrations: ['dist/db/migration/*.js'],
-    synchronize: false,
+    synchronize: true,
     logging: true,
     ssl: {
         rejectUnauthorized: false

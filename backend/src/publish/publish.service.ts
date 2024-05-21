@@ -57,6 +57,14 @@ export class PublishService {
     return savedPublish;
   }
 
+  async findAllByLikes(): Promise<Publish[]> {
+    return this.publishRepository.createQueryBuilder('publish')
+      .leftJoinAndSelect('publish.likes', 'like')
+      .loadRelationCountAndMap('publish.likesCount', 'publish.likes')
+      .orderBy('publish.likesCount', 'DESC')
+      .getMany();
+  }
+
   findAll(): Promise<Publish[]> {
     return this.publishRepository.find({ relations: ['creator', 'superpowers', 'tags', 'comments', 'likes'] });
   }

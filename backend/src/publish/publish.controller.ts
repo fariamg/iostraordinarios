@@ -18,6 +18,11 @@ export class PublishController {
     return this.publishService.create(createPublishDto, userId);
   }
 
+  @Get('likes')
+  async findAllByLikes(): Promise<Publish[]> {
+    return this.publishService.findAllByLikes();
+  }
+
   @ApiBearerAuth('KEY_AUTH')
   @Get()
   @ApiResponse({ status: 200, description: 'Return all publishes', type: [Publish] })
