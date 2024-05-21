@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 import { Publish } from '../publish/entities/publish.entity';
 import { UserService } from '../user/user.service';
+import { UserResponseDto } from 'src/user/dto/user-response.dto';
 
 @Injectable()
 export class CommentService {
@@ -15,7 +16,7 @@ export class CommentService {
     private readonly userService: UserService
   ) { }
 
-  async create(createCommentDto: CreateCommentDto, creator: User, publish: Publish): Promise<Comment> {
+  async create(createCommentDto: CreateCommentDto, creator: User, publish: Publish): Promise<any> {
     if (!creator || !publish) {
       throw new Error('User or publish not found');
     }
@@ -30,7 +31,17 @@ export class CommentService {
 
     await this.userService.incrementScoreAndInteractions(creator.id);
 
-    return savedComment;
+    const userResponse: UserResponseDto = {
+      id: creator.id,
+      fullName: creator.fullName,
+      position: creator.position,
+      superpower: creator.superpower,
+    };
+
+    return {
+      ...savedComment,
+      creator: userResponse,
+    };
   }
 
   findAll(): Promise<Comment[]> {
