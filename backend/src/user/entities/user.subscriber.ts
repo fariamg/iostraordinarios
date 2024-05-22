@@ -10,21 +10,22 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
         return User;
     }
 
+   
     async beforeUpdate(event: UpdateEvent<User>) {
         const userRep: Repository<User> = event.connection.manager.getRepository<User>('users');
         const superpowerRep: Repository<Superpower> = event.connection.manager.getRepository<Superpower>('superpowers');
         
-        const result = await userRep.createQueryBuilder('users')
-            .select('SUM(users.score)', 'totalScore')
-            .getRawOne();
-    
         const superpowers = await superpowerRep.find();
     
         for (const superpower of superpowers) {
+            const result = await userRep.createQueryBuilder('users')
+                .select('SUM(users.score)', 'totalScore')
+                .where('users.superpowerId = :superpowerId', { superpowerId: superpower.id })
+                .getRawOne();
+    
             await superpowerRep.update({ id: superpower.id }, { totalScore: result.totalScore });
         }
     }
-    
     async afterUpdate(event: UpdateEvent<User>) {
         const userRep: Repository<User> = event.connection.manager.getRepository<User>('users');
         const superpowerRep: Repository<Superpower> = event.connection.manager.getRepository<Superpower>('superpowers');
