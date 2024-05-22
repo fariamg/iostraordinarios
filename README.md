@@ -26,4 +26,4 @@ Aplicativo que gera jornada gamificada para continuação dos super-poderes.
 
 # Documentação
 
-<li><a href="Links documentação/Links documentação.md"> Link da documentação</a></li>
+<li><a href="Links documentação/link.md"> Link da documentação</a></li>
